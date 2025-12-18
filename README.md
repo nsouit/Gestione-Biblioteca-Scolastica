@@ -123,70 +123,8 @@ WHERE stato = 'Pronto per il prestito' AND dataRichiesta < NOW() - INTERVAL 2 DA
 Viene fatto un controllo all'interno di tutte le prenotazioni e, nel caso la data di richiesta prenotazione più piccola della sottrazione della data di oggi e 2 giorni (dunque 48 ore), viene cambiato il valore dell'attributo stato da ```Pronto per il prestito``` a ```Decaduta```.
 
 ## Diagramma ER
-``` mermaid
-erDiagram
-    LIBRO }o--|{ AUTORE : SCRITTO_DA
-    LIBRO ||--|{ COPIA : ha
-    CASA_EDITRICE ||--o{ LIBRO : PUBBLICA
-    GENERE }|--o{ LIBRO : APPARTIENE
-    UTENTE ||--o{ PRENOTAZIONE : PRENOTA
-    PRENOTAZIONE }o--|| LIBRO : INCLUDE
-    UTENTE ||--o{ PRESTITO : PRENOTA
-    PRESTITO }o--|| LIBRO : INCLUDE
-    MULTA |o--o| PRESTITO : SUBISCE
+![Diagramma ER](diagramma-er.svg)
 
-    LIBRO {
-        VARCHAR ISBN   PK
-        VARCHAR titolo
-        YEAR annoPubblicazione
-    }
-    COPIA {
-        INT IDCopia PK
-        VARCHAR ISBN   FK
-        ENUM stato
-    }
-    AUTORE {
-        INT id PK
-        VARCHAR nome
-        VARCHAR cognome
-        DATE dataNascita
-    }
-    CASA_EDITRICE {
-        INT PIVA PK
-        VARCHAR nome
-    }
-    GENERE {
-        VARCHAR NOME PK
-    }
-    UTENTE {
-        VARCHAR CF PK
-        DATE dataNascita
-        VARCHAR nome
-        VARCHAR cognome
-        ENUM tipo
-    }
-    PRENOTAZIONE {
-        INT IDPrenotazione PK
-        VARCHAR CF FK
-        VARCHAR ISBN FK
-        TIMESTAMP dataRichiesta
-        ENUM stato
-    }
-    PRESTITO {
-        INT IDPrestito PK
-        VARCHAR CF FK
-        INT IDCopia FK
-        TIMESTAMP dataInizio
-        TIMESTAMP dataFinePrevista
-        TIMESTAMP dataFineEffettiva*
-    }
-    MULTA {
-        INT ID_MULTA PK
-        INT IDPrestito FK
-        DECIMAL costo
-        ENUM stato
-    }
-```
 ## Schema logico
 - Libri(<u>ISBN</u>, titolo, annoPubblicazione, CE_PIVA FK)
 
