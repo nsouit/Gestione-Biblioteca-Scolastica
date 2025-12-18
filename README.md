@@ -170,25 +170,25 @@ erDiagram
         VARCHAR CF FK
         VARCHAR ISBN FK
         TIMESTAMP dataRichiesta
-        TIMESTAMP dataScadenza
+        ENUM stato
     }
     PRESTITO {
         INT IDPrestito PK
         VARCHAR CF FK
         INT IDCopia FK
-        TIMESTAMP dataInizioEffettiva
+        TIMESTAMP dataInizio
         TIMESTAMP dataFinePrevista
         TIMESTAMP dataFineEffettiva*
     }
     MULTA {
         INT ID_MULTA PK
         INT IDPrestito FK
-        TIMESTAMP dataInizio
-        TIMESTAMP dataFineSospensione
+        DECIMAL costo
+        ENUM stato
     }
 ```
 ## Schema logico
-- Libri(<u>ISBN</u>, titolo, annoPubblicazione, PIVA FK, NomeGenere FK)
+- Libri(<u>ISBN</u>, titolo, annoPubblicazione, CE_PIVA FK)
 
 - Autori(<u>id</u>, nome, cognome, dataNascita)
 
@@ -202,82 +202,82 @@ erDiagram
 
 - Utenti(<u>CF</u>, nome, cognome, dataNascita, tipo)
 
-- Prenotazioni(<u>IDPrenotazione</u>, CF FK, ISBN FK, dataRichiesta, dataScadenza)
+- Prenotazioni(<u>IDPrenotazione</u>, CF FK, ISBN FK, dataRichiesta, stato)
 
-- Prestiti(<u>IDPrestito</u>, CF FK, IDCopia FK, dataInizioEffettiva, dataFinePrevista, dataFineEffettiva*)
+- Prestiti(<u>IDPrestito</u>, CF FK, IDCopia FK, dataInizio, dataFinePrevista, dataFineEffettiva*)
 
-- Multe(<u>ID_MULTA</u>, IDPrestito FK, dataInizio, dataFineSospensione)
+- Multe(<u>ID_MULTA</u>, IDPrestito FK, costo, stato)
 
 ## Dizionario dei dati
 ### Entità **libro**
-| Attributo        | Tipo         | Descrizione                              |
-| ---------------- | ------------ | ---------------------------------------- |
-| ISBN             | VARCHAR (PK) | Codice identificativo univoco del libro  |
-| titolo           | VARCHAR      | Titolo del libro                         |
-| annoPubblicazion | YEAR         | Anno di pubblicazione                    |
-| PIVA             | INT (FK)     | Casa editrice che ha pubblicato il libro |
+Attributo | Tipo | Descrizione
+-|-|-
+ISBN                | VARCHAR (PK)  | Codice identificativo univoco del libro
+titolo              | VARCHAR       | Titolo del libro
+annoPubblicazione   | YEAR          | Anno di pubblicazione
+PIVA                | INT (FK)      | Casa editrice che ha pubblicato il libro
 
 ### Entità **autore**
-| Attributo   | Tipo     | Descrizione                        |
-| ----------- | -------- | ---------------------------------- |
-| id          | INT (PK) | Identificatore univoco dell’autore |
-| nome        | VARCHAR  | Nome dell’autore                   |
-| cognome     | VARCHAR  | Cognome dell’autore                |
-| dataNascita | DATE     | Data di nascita                    |
+Attributo | Tipo | Descrizione
+-|-|-
+id          | INT (PK)  | Identificatore univoco dell’autore
+nome        | VARCHAR   | Nome dell’autore
+cognome     | VARCHAR   | Cognome dell’autore
+dataNascita | DATE      | Data di nascita
 
 ### Entità **casa_editrice**
-| Attributo | Tipo     | Descrizione                     |
-| --------- | -------- | ------------------------------- |
-| PIVA      | INT (PK) | Partita IVA della casa editrice |
-| nome      | VARCHAR  | Nome della casa editrice        |
+Attributo | Tipo | Descrizione
+-|-|-
+PIVA      | INT (PK) | Partita IVA della casa editrice
+nome      | VARCHAR  | Nome della casa editrice
 
 ### Entità **genere**
-| Attributo | Tipo         | Descrizione     |
-| --------- | ------------ | --------------- |
-| nome      | VARCHAR (PK) | Nome del genere |
+Attributo | Tipo | Descrizione
+-|-|-
+nome      | VARCHAR (PK) | Nome del genere
 
 ### Entità **copia**
-| Attributo | Tipo         | Descrizione                                                     |
-| --------- | ------------ | --------------------------------------------------------------- |
-| IDCopia   | INT (PK)     | Identificatore univoco della copia fisica                       |
-| ISBN      | VARCHAR (FK) | Libro a cui appartiene la copia                                 |
-| stato     | ENUM         | Stato della copia (disponibile, in prestito, danneggiata, ecc.) |
+Attributo | Tipo | Descrizione
+-|-|-
+IDCopia | INT (PK)      | Identificatore univoco della copia fisica
+ISBN    | VARCHAR (FK)  | Libro a cui appartiene la copia
+stato   | ENUM          | Stato della copia
 
 ### Entità **utente**
-| Attributo   | Tipo         | Descrizione                         |
-| ----------- | ------------ | ----------------------------------- |
-| CF          | VARCHAR (PK) | Codice fiscale dell’utente          |
-| nome        | VARCHAR      | Nome dell’utente                    |
-| cognome     | VARCHAR      | Cognome dell’utente                 |
-| dataNascita | DATE         | Data di nascita                     |
-| tipo        | ENUM         | Tipo di utente (studente o docente) |
+Attributo | Tipo | Descrizione
+-|-|-
+CF          | VARCHAR (PK)  | Codice fiscale dell’utente
+nome        | VARCHAR       | Nome dell’utente
+cognome     | VARCHAR       | Cognome dell’utente
+dataNascita | DATE          | Data di nascita
+tipo        | ENUM          | Tipo di utente (studente o docente)
 
 ### Entità **prenotazione**
-| Attributo      | Tipo         | Descrizione                         |
-| -------------- | ------------ | ----------------------------------- |
-| IDPrenotazione | INT (PK)     | Identificatore della prenotazione   |
-| CF             | VARCHAR (FK) | Utente che prenota                  |
-| ISBN           | VARCHAR (FK) | Libro prenotato                     |
-| dataRichiesta  | TIMESTAMP    | Data e ora della richiesta          |
-| dataScadenza   | TIMESTAMP    | Data di scadenza della prenotazione |
+Attributo | Tipo | Descrizione
+-|-|-
+IDPrenotazione  | INT (PK)      | Identificatore della prenotazione
+CF              | VARCHAR (FK)  | Utente che prenota
+ISBN            | VARCHAR (FK)  | Libro prenotato
+dataRichiesta   | TIMESTAMP     | Data e ora della richiesta
+stato           | ENUM          | Stato della prenotazion
 
 ### Entità **prestito**
-| Attributo           | Tipo         | Descrizione                                 |
-| ------------------- | ------------ | ------------------------------------------- |
-| IDPrestito          | INT (PK)     | Identificatore del prestito                 |
-| CF                  | VARCHAR (FK) | Utente che effettua il prestito             |
-| IDCopia             | INT (FK)     | Copia prestata                              |
-| dataInizioEffettiva | TIMESTAMP    | Data di inizio prestito                     |
-| dataFinePrevista    | TIMESTAMP    | Data prevista di restituzione               |
-| dataFineEffettiva   | TIMESTAMP    | Data reale di restituzione (NULL se attivo) |
+Attributo | Tipo | Descrizione
+-|-|-
+IDPrestito          | INT (PK)      | Identificatore del prestito
+CF                  | VARCHAR (FK)  | Utente che effettua il prestito
+IDCopia             | INT (FK)      | Copia prestata
+dataInizio          | TIMESTAMP     | Data di inizio prestito
+dataFinePrevista    | TIMESTAMP     | Data prevista di restituzione
+dataFineEffettiva*  | TIMESTAMP     | Data reale di restituzione
 
 ### Entità **multa**
-| Attributo           | Tipo      | Descrizione                |
-| ------------------- | --------- | -------------------------- |
-| ID_MULTA            | INT (PK)  | Identificatore della multa |
-| IDPrestito          | INT (FK)  | Prestito associato         |
-| dataInizio          | TIMESTAMP | Inizio della sospensione   |
-| dataFineSospensione | TIMESTAMP | Fine della sospensione     |
+Attributo | Tipo | Descrizione
+-|-|-
+ID_MULTA    | INT (PK)  |Identificatore della multa
+IDPrestito  | INT (FK)  | Prestito associato
+costo       | DECIMAL   | Costo della multa
+stato       | ENUM      | Stato della multa
 
 ## Conclusioni
 
