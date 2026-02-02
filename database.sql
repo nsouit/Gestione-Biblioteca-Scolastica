@@ -5,11 +5,9 @@ CREATE DATABASE 5cit_biblioteca;
 USE 5cit_biblioteca;
 
 -- creazione tabelle
-CREATE TABLE casa_editrice (
-    PIVA INT(11) UNSIGNED ZEROFILL NOT NULL,
+CREATE TABLE casaEditrice (
     nome VARCHAR(30) NOT NULL UNIQUE,
-
-    PRIMARY KEY (PIVA)
+    PRIMARY KEY (nome)
 );
 
 CREATE TABLE genere (
@@ -22,30 +20,19 @@ CREATE TABLE libro (
     titolo VARCHAR(30) NOT NULL,
     annoPubblicazione YEAR NOT NULL,
 
-    casa_editrice INT(11) UNSIGNED ZEROFILL NOT NULL,
+    casaEditrice VARCHAR(30) NOT NULL,
+    genere VARCHAR(30) NOT NULL,
 
     PRIMARY KEY(ISBN),
 
     CONSTRAINT libro_ibfk_0
-        FOREIGN KEY(casa_editrice) REFERENCES casa_editrice(PIVA)
+        FOREIGN KEY(casaEditrice) REFERENCES casaEditrice(nome)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT libro_ibfk_1
+        FOREIGN KEY(genere) REFERENCES genere(nome)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-);
-
-CREATE TABLE libro_genere (
-  ISBN VARCHAR(13) NOT NULL,
-  nome_genere VARCHAR(30) NOT NULL,
-
-  PRIMARY KEY(ISBN, nome_genere),
-
-  CONSTRAINT libro_genere_ibfk_0
-    FOREIGN KEY(ISBN) REFERENCES libro(ISBN)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT libro_genere_ibfk_1
-    FOREIGN KEY(nome_genere) REFERENCES genere(nome)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
 );
 
 CREATE TABLE copia_libro (
@@ -159,51 +146,24 @@ INSERT INTO genere VALUES
 ('Fantascienza'),
 ('Biografia');
 
-INSERT INTO casa_editrice VALUES
-(12345, 'Mondadori'),
-(23456, 'Feltrinelli'),
-(34567, 'Einaudi'),
-(678, 'Rizzoli'),
-(56789, 'Giunti'),
-(90, 'Newton Compton'),
-(901, 'Laterza');
+INSERT INTO casaEditrice VALUES
+('Mondadori'),
+('Feltrinelli'),
+('Einaudi'),
+('Rizzoli'),
+('Giunti'),
+('Newton Compton'),
+('Laterza');
 
 INSERT INTO libro VALUES
-('9788806219645', 'Il nome della rosa', 1980, 34567),
-('9788804681161', 'Norwegian Wood', 1987, 12345),
-('9788806229095', '1984', 1949, 678),
-('9788807901983', 'Il Signore degli Anelli', 1954, 23456),
-('9788868363449', 'Sapiens', 2011, 56789),
-('9788822703578', 'Inferno', 2013, 90),
-('9788842097580', 'Steve Jobs', 2011, 901),
-('9788804684193', 'Il vecchio e il mare', 1952, 12345);
-
-INSERT INTO libro_genere VALUES
--- Il nome della rosa
-('9788806219645', 'Storico'),
-('9788806219645', 'Thriller'),
-
--- Norwegian Wood
-('9788804681161', 'Romanzo'),
-
--- 1984
-('9788806229095', 'Fantascienza'),
-('9788806229095', 'Romanzo'),
-
--- Il Signore degli Anelli
-('9788807901983', 'Fantasy'),
-
--- Sapiens
-('9788868363449', 'Saggio'),
-
--- Inferno
-('9788822703578', 'Thriller'),
-
--- Steve Jobs
-('9788842097580', 'Biografia'),
-
--- Il vecchio e il mare
-('9788804684193', 'Romanzo');
+('9788806219645', 'Il nome della rosa', 1980, 'Einaudi', 'Storico'),
+('9788804681161', 'Norwegian Wood', 1987, 'Mondadori', 'Romanzo'),
+('9788806229095', '1984', 1949, 'Rizzoli', 'Fantascienza'),
+('9788807901983', 'Il Signore degli Anelli', 1954, 'Feltrinelli', 'Fantasy'),
+('9788868363449', 'Sapiens', 2011, 'Giunti', 'Saggio'),
+('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
+('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
+('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
 
 INSERT INTO autore (nome, cognome, dataNascita) VALUES
 ('Umberto', 'Eco', '1932-01-05'),
@@ -228,19 +188,18 @@ INSERT INTO libri_scritti_autore (ISBN, IDAutore) VALUES
 
 -- Il Signore degli Anelli
 ('9788807901983', 4),
-('9788807901983', 5),
 
 -- Sapiens
-('9788868363449', 6),
+('9788868363449', 5),
 
 -- Inferno
-('9788822703578', 7),
+('9788822703578', 6),
 
 -- Steve Jobs
-('9788842097580', 8),
+('9788842097580', 7),
 
 -- Il vecchio e il mare
-('9788804684193', 9);
+('9788804684193', 8);
 
 INSERT INTO copia_libro (ISBN) VALUES
 -- Il nome della rosa
