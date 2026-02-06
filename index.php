@@ -8,6 +8,7 @@ try {
 
 <head>
     <link rel="stylesheet" href="css/style.css">
+    <title>Biblioteca Galattica</title>
 </head>
 
 <body>
