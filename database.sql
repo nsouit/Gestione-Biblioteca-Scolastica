@@ -73,12 +73,25 @@ CREATE TABLE libri_scritti_autore (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE tipo_utente (
+    tipo VARCHAR(30) NOT NULL,
+
+    PRIMARY KEY(tipo)
+);
+
 CREATE TABLE utente (
     CF VARCHAR(16) NOT NULL,
     nome VARCHAR(30) NOT NULL,
     cognome VARCHAR(30) NOT NULL,
     dataNascita DATE NOT NULL,
-    tipo ENUM("Docente", "Studente") NOT NULL,
+    username VARCHAR(30) UNIQUE NOT NULL,
+    passwd VARCHAR(64) NOT NULL, /*sha256*/
+    tipo VARCHAR(30) NOT NULL,
+
+    CONSTRAINT utente_ibfk_0
+        FOREIGN KEY(tipo) REFERENCES tipo_utente(tipo)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
 
     PRIMARY KEY(CF)
 );
@@ -242,6 +255,11 @@ INSERT INTO copia_libro (ISBN) VALUES
 ('9788804684193'),
 ('9788804684193');
 
+INSERT INTO tipo_utente VALUES
+("Docente"),
+("Utente");
+
+/*
 INSERT INTO utente VALUES
 ('RSSMRA85M01H501Z', 'Mario', 'Absolute', '1985-08-01', 'Docente'),
 ('BNCLRA90F41F205X', 'Laura', 'Bianchi', '1990-06-01', 'Studente'),
@@ -448,3 +466,4 @@ WHERE P.dataFineEffettiva IS NOT NULL
 UPDATE multa
 SET stato = 'Pagata'
 WHERE IDMulta = 1;
+*/

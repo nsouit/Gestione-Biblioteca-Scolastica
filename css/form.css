@@ -1,0 +1,27 @@
+.form {
+  list-style-type: none;
+  margin: 5% auto; 
+  padding: 0%;
+  background-color: #e44d4d;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+}
+
+.lbl {
+  display: flex;
+  justify-content: left;
+}
+
+.usrIn {
+  margin: 15px;
+}
+
+input[type=text], input[type=password], select {
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  color: white;
+}
