@@ -1,8 +1,8 @@
 <?php
 //session_start();
-include("inc/datiConnessione.inc");
+include("inc/datiConnessione.php");
 try {
-    include("inc/startConn.inc");
+    include("inc/startConn.php");
 
 //if ($_SERVER["REQUEST_METHOD" == "POST"]) {
 if(array_filter($_POST)) {

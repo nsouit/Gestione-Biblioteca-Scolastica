@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <?php
-include("inc/datiConnessione.inc");
+include("inc/datiConnessione.php");
 try {
-    include("inc/startConn.inc");
+    include("inc/startConn.php");
 ?>
 
 <head>

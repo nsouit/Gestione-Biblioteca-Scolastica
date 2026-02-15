@@ -1,31 +1,133 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+  font-family: 'Jost', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: whitesmoke;
-  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #fff, #0D4ABC);
+  color: #333;
 }
+
+.container {
+  margin: 0 15px;
+}
+
+.form-box {
+  margin: 40px 0;
+  background: #fff;
+  width: 100%;
+  max-width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  display: none;
+}
+
+.form-box.active {
+  display: block;
+}
+
+h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  background: #eee;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+input:hover {
+  cursor: text;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #FF0000;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: 0.5s;
+}
+
+button:hover {
+  background-color: #9C0005;
+}
+
+p {
+  font-size: 14.5px;
+  text-align: center;
+}
+
+p a {
+  color: #0D4ABC;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.error-message {
+  padding: 6px 12px;
+  background: #f8d7da;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #a42834;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+
 
 ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  background-color: #e44d4d;
+  margin: 5px;
+  background-color: #e14a4a;
   display: flex;
   height: 40px;
   justify-content: right;
   
   position: sticky;
   top: 0;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 ul li a {
   display: block;
   color: white;
-  padding: 9px 8px;
+  padding: 9px 20px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 10px;
   align-items: center;
 }
 
@@ -35,8 +137,9 @@ ul li a:hover {
 
 .datiDB {
   list-style-type: none;
-  margin: 100px;
-  margin-top: 40px;
+  margin-right: 20%;
+  margin-left: 20%;
+  margin-top: 20px;
   padding: 0;
   background-color: #e5dbdb;
   display: flex;
@@ -46,3 +149,23 @@ ul li a:hover {
   color: black;
   border-radius: 5px;
 }
+
+.rigaAlternata {
+  background-color: #e14a4a;
+  color: white;
+}
+
+table {
+  justify-content: center;
+  align-items: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr:hover {
+  background-color: #f06f6f;
+  color: #000000;
+} 

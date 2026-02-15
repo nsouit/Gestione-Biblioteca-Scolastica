@@ -1,13 +1,13 @@
 .form {
-  list-style-type: none;
   margin: 5% auto; 
-  padding: 0%;
-  background-color: #e44d4d;
-  border-radius: 6px;
+  background-color: #e14a4a;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  padding-left: 3%;
+  padding-right: 3%;
+  width: 30%;
 }
 
 .lbl {
@@ -16,10 +16,13 @@
 }
 
 .usrIn {
-  margin: 15px;
+  margin: 10% auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-input[type=text], input[type=password], select {
+input, select {
   border: none;
   border-bottom: 1px solid white;
   background-color: transparent;

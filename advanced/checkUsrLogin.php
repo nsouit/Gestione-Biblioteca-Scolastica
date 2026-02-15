@@ -2,8 +2,7 @@
 
 
 <?php
-include("inc/datiConnessione.inc");
-
+//include("inc/datiConnessione.php");
 if ($_SERVER["REQUEST_METHOD" == "POST"]) {
 $user = $_POST['user_username'];
 //echo hash("sha256", $_POST['user_passwd']);
