@@ -5,6 +5,6 @@ session_start();
 
 (isset($_GET['form'])) ? $_SESSION['active_form'] = $_GET['form'] : 'login';
 
-header("Location: login_register.php");
+header("Location: ../login_register.php");
 exit();
 ?>

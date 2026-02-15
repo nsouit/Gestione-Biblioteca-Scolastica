@@ -31,14 +31,13 @@ try {
                 // genero errore con session
                 //echo "Password incorretta";
                 $_SESSION['login_error'] = "Password errata!";
-                header("Location: login_register.php");
-                exit();
             }
         }
-        
-        // utente non trovato, genero errore con session
-        $_SESSION['login_error'] = "Utente inesistente!";
-        header("Location: login_register.php");
+        else
+            // utente non trovato, genero errore con session
+            $_SESSION['login_error'] = "Utente inesistente!";
+
+        header("Location: ../login_register.php");
         exit();
     }
     else if (isset($_POST['register'])) {
@@ -85,7 +84,7 @@ try {
         else
             $_SESSION['register_error'] = "Inserimento password errato!";
 
-        header("Location: login_register.php");
+        header("Location: ../login_register.php");
         exit();
     }
 } catch (exception $e) {

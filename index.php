@@ -13,7 +13,7 @@ try {
 
 <body>
     <?php
-    include("inc/function/nav_bar.php");
+    include("nav_bar.php");
     ?>
 
 </body>
