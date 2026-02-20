@@ -32,8 +32,9 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background: #0D4ABC;
+  background: #dfdfdf;
   height: 55px;
+  text-decoration: none;
 }
 
 .logo {
@@ -45,16 +46,26 @@ nav {
   width: 28px;
 }
 
-.logo h3 {
+.logo a h3 {
   margin-left: 10px;
-  text-decoration: none;
+  
   font-size: 28px;
+  color: #000000;
+}
+
+.logo a h3:hover {
+  cursor: pointer;
+}
+
+.logo a {
+  text-decoration: none;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
   list-style: none;
+  
 }
 
 .nav-links a {
@@ -64,10 +75,13 @@ nav {
   font-size: 16px;
   text-transform: uppercase;
   transition: all ease-in-out 100ms;
+  color: black;
 }
 
 .nav-links a:hover {
-  
+  color: #FF0000;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .main {

@@ -32,12 +32,11 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Autenticazione</title>
+    <?php
+    include("support/head.php");
+    ?>
 </head>
 <body>
     <?php
@@ -46,20 +45,19 @@ try {
     
     <div class="main">
         <div class="container">
-            <!--inserisco sia login che registrati, poi li attivo o disattivo con js-->
             <div class="form-box <?php echo isActiveForm('login', $active_form) ?>" id="login-form">
-                <form action="check_user_data.php" method="post">
+                <form action="support/check_user_data.php" method="post">
                     <h2>Login</h2>
                     <?php echo (showError($errors['login'])) ?>
                     <input type="email" name="email" placeholder="E-mail" required>
                     <input type="password" name="passwd" placeholder="Password" minlength="6" required>
                     <button type="submit" name="login">Login</button>
-                    <p>Non hai un account? <a href="advanced/change_login.php?form=register">Registrati</a>.</p>
+                    <p>Non hai un account? <a href="support/change_login.php?form=register">Registrati</a>.</p>
                 </form>
             </div>
 
             <div class="form-box <?php echo isActiveForm('register', $active_form) ?>" id="register-form">
-                <form action="check_user_data.php" method="post">  
+                <form action="support/check_user_data.php" method="post">  
                     <h2>Registrati</h2>
                     <?php echo (showError($errors['register'])) ?>
                     <input type="text" name="cf" placeholder="Codice Fiscale" required>
@@ -86,7 +84,7 @@ try {
                     <input type="password" name="passwd" placeholder="Password" minlength="6" required>
                     <input type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
                     <button type="submit" name="register">Registrati</button>
-                    <p>Hai un account? Effettua il <a href="advanced/change_login.php?form=login">Login</a>.</p>
+                    <p>Hai un account? Effettua il <a href="support/change_login.php?form=login">Login</a>.</p>
                 </form>
             </div>
         </div>

@@ -4,11 +4,11 @@
 try {
     include("inc/connection/start.php");
 ?>
-
+<html>
 <head>
-    <link rel="stylesheet" href="css/style.css">
-    <title>Biblioteca Galattica</title>
-    <link rel="icon" type="image/x-icon" href="img/book.ico">
+    <?php
+    include("support/head.php");
+    ?>
 </head>
 
 <body>
@@ -16,7 +16,10 @@ try {
     include("nav_bar.php");
     ?>
 
+    
+
 </body>
+</html>
 
 <?php
 } catch (PDOException $e) {
