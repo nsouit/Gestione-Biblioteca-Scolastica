@@ -138,7 +138,7 @@ select:hover {
   cursor: pointer;
 }
 
-button {
+.log_reg-btn {
   width: 100%;
   padding: 12px;
   background: #FF0000;
@@ -152,7 +152,7 @@ button {
   transition: 0.5s;
 }
 
-button:hover {
+.log_reg-btn:hover {
   background-color: #9C0005;
 }
 
@@ -215,3 +215,55 @@ tr:hover {
   background-color: #f06f6f;
   color: #000000;
 } 
+
+
+.dropdown {
+  position: relative;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+/* Style the dropdown button */
+.dropbtn {
+  background-color: #00000000;
+  padding: 15px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  transition: all ease-in-out 100ms;
+  color: black;
+  border: none;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content {
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+/* Links inside dropdown content */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}

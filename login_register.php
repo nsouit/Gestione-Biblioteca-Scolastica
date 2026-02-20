@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 $errors = [
     'login' => $_SESSION['login_error'] ?? '',
@@ -51,7 +51,7 @@ try {
                     <?php echo (showError($errors['login'])) ?>
                     <input type="email" name="email" placeholder="E-mail" required>
                     <input type="password" name="passwd" placeholder="Password" minlength="6" required>
-                    <button type="submit" name="login">Login</button>
+                    <button class="log_reg-btn" type="submit" name="login">Login</button>
                     <p>Non hai un account? <a href="support/change_login.php?form=register">Registrati</a>.</p>
                 </form>
             </div>

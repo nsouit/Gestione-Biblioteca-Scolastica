@@ -4,6 +4,9 @@ try {
     include("../inc/connection/start.php");
     include("../inc/db_tables_params.php");
 
+    /*=================================
+                    LOGIN
+    =================================*/
     if (isset($_POST['login'])) {
         $_SESSION['active_form'] = "login";
 
@@ -19,11 +22,18 @@ try {
         if ($results->rowCount() > 0) {
             $user = $results->fetch();
 
+            // cerco il tipo di utente
+            $sql = "SELECT tipo FROM tipo_utente WHERE IDtipo = ".$user['tipo'].";";
+            $results = $conn->query($sql);
+
             //echo $user['nome'];
-            if ($passwd == $user['passwd']) {
+            if ($passwd == $user['passwd'] && ($results->rowCount() > 0)) {
+                $usr_type = $results->fetch();
+
                 echo "Correttamente autenticato.";
                 $_SESSION['nome'] = $user['nome'];
                 $_SESSION['email'] = $user['email'];
+                $_SESSION['ruolo'] = $usr_type['tipo'];
                 header("Location: ../index.php");
                 exit();
             }
@@ -40,6 +50,11 @@ try {
         header("Location: ../login_register.php");
         exit();
     }
+
+
+    /*====================================
+                    REGISTER
+    ====================================*/
     else if (isset($_POST['register'])) {
         $_SESSION['active_form'] = "register";
 
