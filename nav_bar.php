@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+if (session_status() != PHP_SESSION_ACTIVE)
+    session_start();
 //if (isset($_SESSION['nome']) && isset($_SESSION['email']))
 // <li><a class='nav-login-button' href='login_register.php'>Login</a></li>
 
@@ -28,7 +30,7 @@ session_start();
         if (isset($_SESSION['nome']) && isset($_SESSION['email']) && isset($_SESSION['ruolo'])) {
             switch ($_SESSION['ruolo']) {
                 case "Bibliotecario":
-                    //echo "<li><a class='nav-btn' href='insert_book.php'>Registra libro</a></li>";
+                    echo "<li><a class='nav-btn' href='insert_book.php'>Registra libro</a></li>";
                     //echo "<li><a class='nav-btn' href='user_search.php'>Cerca utente</a></li>";
                     break;
                 default:
@@ -36,7 +38,7 @@ session_start();
             }
                 
         } else {
-            echo "<li><a class='nav-login-button' href='login_register.php'>Login</a></li>";
+            echo "<li><a class='nav-login-button' href='login.php'>Login</a></li>";
         }
         ?>
     </ul>

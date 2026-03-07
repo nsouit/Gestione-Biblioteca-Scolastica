@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
 $errors = [
     'login' => $_SESSION['login_error'] ?? '',
@@ -12,14 +12,6 @@ session_unset();
 
 function showError($error) {
     return !empty($error) ? "<p class='error-message'>$error</p>" : '';
-}
-
-function isActiveForm($formName, $activeForm) {
-    return ($formName === $activeForm) ? 'active' : '';
-}
-
-function showForm($formName) {
-    $_SESSION['active_form'] = $formName;
 }
 ?>
 
@@ -37,6 +29,7 @@ try {
     <?php
     include("support/head.php");
     ?>
+    <link rel="stylesheet" href="css/form.css">
 </head>
 <body>
     <?php
@@ -45,26 +38,15 @@ try {
     
     <div class="main">
         <div class="container">
-            <div class="form-box <?php echo isActiveForm('login', $active_form) ?>" id="login-form">
-                <form action="support/check_user_data.php" method="post">
-                    <h2>Login</h2>
-                    <?php echo (showError($errors['login'])) ?>
-                    <input type="email" name="email" placeholder="E-mail" required>
-                    <input type="password" name="passwd" placeholder="Password" minlength="6" required>
-                    <button class="log_reg-btn" type="submit" name="login">Login</button>
-                    <p>Non hai un account? <a href="support/change_login.php?form=register">Registrati</a>.</p>
-                </form>
-            </div>
-
-            <div class="form-box <?php echo isActiveForm('register', $active_form) ?>" id="register-form">
-                <form action="support/check_user_data.php" method="post">  
+            <div class="form-box active" id="register-form">
+                <form id="registerForm" action="support/check_user_data.php" method="post">  
                     <h2>Registrati</h2>
                     <?php echo (showError($errors['register'])) ?>
                     <input type="text" name="cf" placeholder="Codice Fiscale" required>
                     <input type="text" name="nome" placeholder="Nome" required>
                     <input type="text" name="cnome" placeholder="Cognome" required>
                     <lable>Data di nascita:</lable>
-                    <input type="date" name="datan" placeholder="Data di nascita" required>
+                    <input type="date" name="datan" placeholder="Data di nascita" min="1900-01-01" required>
                     <lable>Tipologia utente:</lable>
                     <select name="tipo" required>
                         <?php
@@ -81,14 +63,46 @@ try {
                         ?>
                     </select>
                     <input type="email" name="email" placeholder="E-mail" required>
-                    <input type="password" name="passwd" placeholder="Password" minlength="6" required>
-                    <input type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
-                    <button type="submit" name="register">Registrati</button>
-                    <p>Hai un account? Effettua il <a href="support/change_login.php?form=login">Login</a>.</p>
+                    <input id="pwd" type="password" name="passwd" placeholder="Password" minlength="6" required>
+                    <input id="pwd_rep" type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
+                    <button class="log_reg-btn" type="submit" name="register">Registrati</button>
+                    <p>Hai un account? Effettua il <a href="login.php">Login</a>.</p>
                 </form>
             </div>
         </div>
     </div>
+
+    <noscript>
+	  <p>Il tuo Browser non supporta JavaScript.</p>
+	  <p>E' necessario abilitarlo per proseguire.</p>
+	  
+	</noscript>
+	
+	<script src="script.js">
+		document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Stop form from submitting immediately
+            
+            const passwordInput = document.getElementById('pwd');
+            const passwordValue = passwordInput.value;
+
+            const passwordInputRep = document.getElementById('pwd_rep');
+            const passwordValueRep = passwordInputRep.value;
+            
+            // Hash the password
+            const hashed = await sha256(passwordValue);
+            const hashed_rep = await sha256(passwordValueRep);
+            
+            // Replace with hash
+            passwordInput.value = hashed;
+            passwordInputRep.value = hashed_rep;
+            
+            //console.log('Original hashed before submission:', hashed);
+            // Submit form
+            e.target.submit();
+            
+            e.target.reset();
+		});
+	</script>
 </body>
 </html>
 

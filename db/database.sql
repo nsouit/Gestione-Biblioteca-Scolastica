@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS nsouit_biblioteca;
 
 CREATE DATABASE nsouit_biblioteca;
 
@@ -98,14 +97,15 @@ CREATE TABLE tipo_utente (
 );
 
 CREATE TABLE utente (
-    IDutente INT(5) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
+    IDutente INT AUTO_INCREMENT NOT NULL,
     cf VARCHAR(16) NOT NULL UNIQUE,
-    nome VARCHAR(30) NOT NULL,
-    cognome VARCHAR(30) NOT NULL,
+    nome VARCHAR(128) NOT NULL,
+    cognome VARCHAR(128) NOT NULL,
     data_nascita DATE NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    passwd VARCHAR(64) NOT NULL, /*sha256*/
-    tipo INT(2) UNSIGNED ZEROFILL NOT NULL,
+    passwd CHAR(64) NOT NULL, /*sha256*/
+    salt CHAR(64) NOT NULL,
+    tipo INT ZEROFILL NOT NULL,
 
     PRIMARY KEY(IDutente),
     INDEX(cf),

@@ -70,7 +70,7 @@ nav {
 
 .nav-links a {
   display: block;
-  padding: 30px 16px;
+  padding: 30px 0;
   text-decoration: none;
   font-size: 16px;
   text-transform: uppercase;
@@ -84,102 +84,7 @@ nav {
   cursor: pointer;
 }
 
-.main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
 
-.container {
-  margin: 0 15px;
-}
-
-.form-box {
-  margin: 40px 0;
-  background: #fff;
-  width: 100%;
-  max-width: 350px;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  display: none;
-}
-
-.form-box.active {
-  display: block;
-}
-
-h2 {
-  font-size: 32px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  background: #eee;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-input:hover {
-  cursor: text;
-}
-
-select:hover {
-  cursor: pointer;
-}
-
-.log_reg-btn {
-  width: 100%;
-  padding: 12px;
-  background: #FF0000;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #fff;
-  font-weight: 500;
-  margin-bottom: 20px;
-  transition: 0.5s;
-}
-
-.log_reg-btn:hover {
-  background-color: #9C0005;
-}
-
-p {
-  font-size: 14.5px;
-  text-align: center;
-}
-
-p a {
-  color: #0D4ABC;
-  text-decoration: none;
-}
-
-p a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.error-message {
-  padding: 6px 12px;
-  background: #f8d7da;
-  border-radius: 6px;
-  font-size: 12px;
-  color: #a42834;
-  text-align: center;
-  margin-bottom: 20px;
-}
 
 .datiDB {
   list-style-type: none;
@@ -187,7 +92,7 @@ p a:hover {
   margin-left: 20%;
   margin-top: 20px;
   padding: 0;
-  background-color: #e5dbdb;
+  background-color: #dfdfdf;
   display: flex;
   height: 30px;
   justify-content: space-evenly;
@@ -196,38 +101,18 @@ p a:hover {
   border-radius: 5px;
 }
 
-.rigaAlternata {
-  background-color: #e14a4a;
-  color: white;
-}
-
-table {
-  justify-content: center;
-  align-items: center;
-}
-
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-tr:hover {
-  background-color: #f06f6f;
-  color: #000000;
-} 
-
-
 .dropdown {
   position: relative;
   display: flex;
   justify-content: right;
   align-items: center;
+  
 }
 
 /* Style the dropdown button */
 .dropbtn {
   background-color: #00000000;
-  padding: 15px 16px;
+  padding: 15px 0;
   text-decoration: none;
   font-size: 16px;
   text-transform: uppercase;
@@ -242,6 +127,7 @@ tr:hover {
   position: absolute;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
 
 .dropdown-content {
@@ -260,7 +146,8 @@ tr:hover {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #f1f1f1
+  background-color: #f1f1f1;
+  border-radius: 5px;
 }
 
 /* Show the dropdown content on hover */

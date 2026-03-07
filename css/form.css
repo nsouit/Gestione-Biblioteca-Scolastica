@@ -1,0 +1,96 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  margin: 0 15px;
+}
+
+.form-box {
+  margin: 40px 0;
+  background: #fff;
+  width: 100%;
+  max-width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  display: none;
+}
+
+.form-box.active {
+  display: block;
+}
+
+h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  background: #eee;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+input:hover {
+  cursor: text;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+.log_reg-btn {
+  width: 100%;
+  padding: 12px;
+  background: #FF0000;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: 0.5s;
+}
+
+.log_reg-btn:hover {
+  background-color: #9C0005;
+}
+
+p {
+  font-size: 14.5px;
+  text-align: center;
+}
+
+p a {
+  color: #0D4ABC;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.error-message {
+  padding: 6px 12px;
+  background: #f8d7da;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #a42834;
+  text-align: center;
+  margin-bottom: 20px;
+}
