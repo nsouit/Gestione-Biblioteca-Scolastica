@@ -217,17 +217,6 @@ INSERT INTO tipo_utente (tipo) VALUES
 ('Studente'),
 ('Docente');
 
-/*
-INSERT INTO libro VALUES
-('9788806219645', 'Il nome della rosa', 1980, 'Einaudi', 'Storico'),
-('9788804681161', 'Norwegian Wood', 1987, 'Mondadori', 'Romanzo'),
-('9788806229095', '1984', 1949, 'Rizzoli', 'Fantascienza'),
-('9788807901983', 'Il Signore degli Anelli', 1954, 'Feltrinelli', 'Fantasy'),
-('9788868363449', 'Sapiens', 2011, 'Giunti', 'Saggio'),
-('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
-('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
-('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
-
 INSERT INTO autore (nome, cognome, dataNascita) VALUES
 ('Umberto', 'Eco', '1932-01-05'),
 ('Haruki', 'Murakami', '1949-01-12'),
@@ -239,6 +228,19 @@ INSERT INTO autore (nome, cognome, dataNascita) VALUES
 ('Walter', 'Isaacson', '1952-05-20'),
 ('Ernest', 'Hemingway', '1899-07-21');
 
+
+INSERT INTO libro VALUES
+('9788806219645', 'Il nome della rosa', 1980, 1, 5);/*,
+('9788804681161', 'Norwegian Wood', 1987, 'Mondadori', 'Romanzo'),
+('9788806229095', '1984', 1949, 'Rizzoli', 'Fantascienza'),
+('9788807901983', 'Il Signore degli Anelli', 1954, 'Feltrinelli', 'Fantasy'),
+('9788868363449', 'Sapiens', 2011, 'Giunti', 'Saggio'),
+('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
+('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
+('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
+
+
+/*
 INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
 -- Il nome della rosa
 ('9788806219645', 1),

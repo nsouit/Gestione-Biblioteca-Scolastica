@@ -25,6 +25,10 @@ body {
   color: #333;
 }
 
+body h2, h3 {
+  margin: 10px 20px;
+}
+
 nav {
   position: sticky;
   top: 0;
@@ -83,8 +87,6 @@ nav {
   text-decoration: underline;
   cursor: pointer;
 }
-
-
 
 .datiDB {
   list-style-type: none;
@@ -153,4 +155,26 @@ nav {
 /* Show the dropdown content on hover */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+table {
+  display: flex;
+  border-collapse: collapse;
+  border-spacing: 0;
+  justify-content: center;
+}
+
+td {
+  text-align: left;
+}
+
+th {
+  background-color: #FF0000;
+  color: white;
+  text-align: center;
+}
+
+th, td {
+  padding: 5px;
+  border-bottom: 2px solid #ddd;
 }

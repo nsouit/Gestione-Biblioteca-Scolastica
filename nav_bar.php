@@ -14,6 +14,11 @@ if (session_status() != PHP_SESSION_ACTIVE)
         
     </div>
 
+    <form method="get" action="search.php">
+        <input name="search_bar" type="text" placeholder="Cerca nella biblioteca"/>
+        <button type="submit">Cerca</button>
+    </form>
+
     <ul class="nav-links">
         <?php
 
