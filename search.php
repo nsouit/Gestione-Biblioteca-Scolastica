@@ -18,7 +18,7 @@ try {
 
     <?php
     // check is search_bar is set
-    if (isset($_GET["search_bar"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "GET" AND isset($_GET["search_bar"]) AND trim($_GET['search_bar']) != "") {
         echo "<h2>Risultati per: $_GET[search_bar]</h2>";
 
         $key_worlds = explode(" ", $_GET["search_bar"]);
@@ -56,7 +56,7 @@ try {
                 INNER JOIN casa_editrice
                     ON libri.casa_editrice = IDcasa_editrice";
 
-        //echo $sql;
+        echo $sql;
 
         $conn->query($sql);
 
@@ -64,13 +64,16 @@ try {
 
         $n_libri = $results->rowCount();
 
-        echo "<h3>$n_libri libri trovati.</h3>";
-
         if ($n_libri > 0) {
+            if ($n_libri > 1)
+                echo "<h3>$n_libri libri trovati.</h3>";
+            else
+                echo "<h3>$n_libri libro trovato.</h3>";
+
             // la query ha trovato riscontri
             $tab = $results->fetchAll(PDO::FETCH_ASSOC);
 
-            //echo var_dump($tab);
+            echo var_dump($tab);
 
             $keys = array_keys($tab[0]);
            
@@ -89,7 +92,8 @@ try {
             }
             echo "</table>";
 
-        }
+        } else
+             echo "<h3>Nessun libro trovato.</h3>";
     } else {
         echo "<h2>Ricerca non valida</h2>";
     }
