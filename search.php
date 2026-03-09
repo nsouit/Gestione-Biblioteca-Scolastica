@@ -34,7 +34,7 @@ try {
         //$sql .= ";";
 
         // cambio l'id del genere mettendone il nome
-        $sql = "SELECT 
+        /*$sql = "SELECT 
                     libri.isbn,
                     libri.titolo,
                     libri.anno_pubblicazione,
@@ -50,11 +50,69 @@ try {
                     libri.isbn,
                     libri.titolo,
                     libri.anno_pubblicazione,
-                    casa_editrice.nome,
-                    libri.nome_genere
+                    libri.nome_genere,
+                    casa_editrice.nome AS nome_casa_editrice
                 FROM ($sql) AS libri
                 INNER JOIN casa_editrice
-                    ON libri.casa_editrice = IDcasa_editrice";
+                    ON libri.casa_editrice = casa_editrice.IDcasa_editrice";
+
+        $sql = "SELECT
+                    libri.isbn,
+                    libri.titolo,
+                    libri.anno_pubblicazione,
+                    libri.nome_genere,
+                    libri.nome_casa_editrice,
+                    libri_scritti_autore.IDautore
+                FROM ($sql) AS libri
+                INNER JOIN libri_scritti_autoreINNER JOIN libri_scritti_autore
+                    ON libri.isbn = libri_scritti_autore.isbn";
+
+        $sql = "SELECT
+                    libri.isbn,
+                    libri.titolo,
+                    libri.anno_pubblicazione,
+                    libri.nome_genere,
+                    libri.nome_casa_editrice,
+                    autore.nome
+                FROM ($sql) AS libri
+                INNER JOIN autore
+                    ON libri.IDautore = autore.IDautore";
+        */
+
+        $sql = "SELECT * FROM ((((
+            libro
+            INNER JOIN genere
+                USING (IDgenere))
+                INNER JOIN casa_editrice
+                    USING (IDcasa_editrice))
+                    INNER JOIN libri_scritti_autore 
+                        USING (isbn))
+                        INNER JOIN autore
+                            USING (IDautore))
+        ";
+
+        $sql = "SELECT titolo, nome_casa_editrice, anno_pubblicazione, nome_genere
+                    FROM ($sql) AS l 
+                    WHERE ";
+        
+        $sql_operation = "AND ";
+        foreach ($key_worlds as $world) {
+            $sql .= " titolo LIKE '%$world%' $sql_operation";
+        }
+
+        $sql = substr($sql, 0, -strlen($sql_operation));
+
+        $sql_operation = "OR";
+
+        foreach ($key_worlds as $world) {
+            $sql .= " $sql_operation nome_genere LIKE '%$world%'";
+            $sql .= " $sql_operation nome_autore LIKE '%$world%'";
+            $sql .= " $sql_operation cognome_autore LIKE '%$world%'";
+            $sql .= " $sql_operation nome_casa_editrice LIKE '%$world%'";
+        }
+
+        //$sql = substr($sql, 0, -strlen($sql_operation));
+
 
         echo $sql;
 
@@ -73,7 +131,7 @@ try {
             // la query ha trovato riscontri
             $tab = $results->fetchAll(PDO::FETCH_ASSOC);
 
-            echo var_dump($tab);
+            //echo var_dump($tab);
 
             $keys = array_keys($tab[0]);
            
@@ -84,12 +142,17 @@ try {
                 echo "<th>$key</th>";
             echo "</tr>";
 
+
             foreach ($tab as $row) {
                 echo "<tr>";
-                for ($i = 0; $i < count($keys); $i++)
+                for ($i = 0; $i < count($keys); $i++) {
                     echo "<td>".$row[$keys[$i]]."</td>";
+                }
+                    
                 echo "</tr>";
             }
+
+
             echo "</table>";
 
         } else

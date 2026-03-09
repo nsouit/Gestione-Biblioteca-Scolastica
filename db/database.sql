@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS nsouit_biblioteca;
 
 CREATE DATABASE nsouit_biblioteca;
 
@@ -6,14 +7,14 @@ USE nsouit_biblioteca;
 -- creazione tabelle
 CREATE TABLE casa_editrice (
     IDcasa_editrice INT(5) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
-    nome VARCHAR(30) NOT NULL UNIQUE,
+    nome_casa_editrice VARCHAR(30) NOT NULL UNIQUE,
 
     PRIMARY KEY (IDcasa_editrice)
 );
 
 CREATE TABLE genere (
     IDgenere INT(2) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
-    nome VARCHAR(30) NOT NULL,
+    nome_genere VARCHAR(30) NOT NULL,
 
     PRIMARY KEY(IDgenere)
 );
@@ -23,17 +24,17 @@ CREATE TABLE libro (
     titolo VARCHAR(30) NOT NULL,
     anno_pubblicazione YEAR NOT NULL,
 
-    casa_editrice INT(5) UNSIGNED ZEROFILL NOT NULL,
-    genere INT(2) UNSIGNED ZEROFILL NOT NULL,
+    IDcasa_editrice INT(5) UNSIGNED ZEROFILL NOT NULL,
+    IDgenere INT(2) UNSIGNED ZEROFILL NOT NULL,
 
     PRIMARY KEY(isbn),
 
     CONSTRAINT libro_ibfk_0
-        FOREIGN KEY(casa_editrice) REFERENCES casa_editrice(IDcasa_editrice)
+        FOREIGN KEY(IDcasa_editrice) REFERENCES casa_editrice(IDcasa_editrice)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT libro_ibfk_1
-        FOREIGN KEY(genere) REFERENCES genere(IDgenere)
+        FOREIGN KEY(IDgenere) REFERENCES genere(IDgenere)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -65,9 +66,9 @@ CREATE TABLE copia_libro (
 
 CREATE TABLE autore (
     IDautore INT(5) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
-    nome VARCHAR(30) NOT NULL,
-    cognome VARCHAR(30) NOT NULL,
-    data_nascita DATE NOT NULL,
+    nome_autore VARCHAR(30) NOT NULL,
+    cognome_autore VARCHAR(30) NOT NULL,
+    data_nascita_autore DATE NOT NULL,
 
     PRIMARY KEY(IDautore)
 );
@@ -195,7 +196,7 @@ CREATE TABLE multa (
 );
 
 -- inserimento dati all'interno delle tabelle
-INSERT INTO genere (nome) VALUES
+INSERT INTO genere (nome_genere) VALUES
 ('Romanzo'),
 ('Saggio'),
 ('Fantasy'),
@@ -204,7 +205,7 @@ INSERT INTO genere (nome) VALUES
 ('Fantascienza'),
 ('Biografia');
 
-INSERT INTO casa_editrice (nome) VALUES
+INSERT INTO casa_editrice (nome_casa_editrice) VALUES
 ('Mondadori'),
 ('Feltrinelli'),
 ('Einaudi'),
@@ -217,7 +218,7 @@ INSERT INTO tipo_utente (tipo) VALUES
 ('Studente'),
 ('Docente');
 
-INSERT INTO autore (nome, cognome, dataNascita) VALUES
+INSERT INTO autore (nome_autore, cognome_autore, data_nascita_autore) VALUES
 ('Umberto', 'Eco', '1932-01-05'),
 ('Haruki', 'Murakami', '1949-01-12'),
 ('George', 'Orwell', '1903-06-25'),
@@ -238,12 +239,12 @@ INSERT INTO libro VALUES
 ('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
 ('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
 ('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
+*/
 
 
-/*
 INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
 -- Il nome della rosa
-('9788806219645', 1),
+('9788806219645', 1);/*,
 
 -- Norwegian Wood
 ('9788804681161', 2),
