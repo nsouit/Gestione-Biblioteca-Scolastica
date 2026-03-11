@@ -216,7 +216,8 @@ INSERT INTO casa_editrice (nome_casa_editrice) VALUES
 
 INSERT INTO tipo_utente (tipo) VALUES
 ('Studente'),
-('Docente');
+('Docente'),
+('Bibliotecario');
 
 INSERT INTO autore (nome_autore, cognome_autore, data_nascita_autore) VALUES
 ('Umberto', 'Eco', '1932-01-05'),
@@ -231,23 +232,22 @@ INSERT INTO autore (nome_autore, cognome_autore, data_nascita_autore) VALUES
 
 
 INSERT INTO libro VALUES
-('9788806219645', 'Il nome della rosa', 1980, 1, 5);/*,
-('9788804681161', 'Norwegian Wood', 1987, 'Mondadori', 'Romanzo'),
-('9788806229095', '1984', 1949, 'Rizzoli', 'Fantascienza'),
-('9788807901983', 'Il Signore degli Anelli', 1954, 'Feltrinelli', 'Fantasy'),
-('9788868363449', 'Sapiens', 2011, 'Giunti', 'Saggio'),
-('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
-('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
-('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
-*/
+('9788845210662', 'Il nome della rosa', 1980, 1, 5),
+('9780375704024', 'Norwegian Wood', 1987, 1, 1),
+('9788806229095', '1984', 1949, 4, 6),
+('9788807901983', 'Il Signore degli Anelli', 1954, 2, 3),
+('9788868363449', 'Sapiens', 2011, 5, 2),
+('9788822703578', 'Inferno', 2013, 6, 4),
+('9788842097580', 'Steve Jobs', 2011, 7, 7),
+('9788804684193', 'Il vecchio e il mare', 1952, 1, 1);
 
 
 INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
 -- Il nome della rosa
-('9788806219645', 1);/*,
+('9788845210662', 1),
 
 -- Norwegian Wood
-('9788804681161', 2),
+('9780375704024', 2),
 
 -- 1984
 ('9788806229095', 3),
@@ -267,16 +267,17 @@ INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
 -- Il vecchio e il mare
 ('9788804684193', 8);
 
+/*
 INSERT INTO copia_libro (isbn) VALUES
 -- Il nome della rosa
-('9788806219645'),
-('9788806219645'),
-('9788806219645'),
+('9788845210662'),
+('9788845210662'),
+('9788845210662'),
 
 -- Norwegian Wood
-('9788804681161'),
-('9788804681161'),
-('9788804681161'),
+('9780375704024'),
+('9780375704024'),
+('9780375704024'),
 
 -- 1984
 ('9788806229095'),
@@ -328,8 +329,8 @@ INSERT INTO utente VALUES
 
 -- vengono fatte delle prenotazioni, ma nessuna viene impostata a completata
 INSERT INTO prenotazione (cf, isbn, data_richiesta, stato) VALUES
-('BNCLRA90F41F205X', '9788806219645', '2025-01-10', 'In attesa'),
-('NRANNA02C62H501T', '9788804681161', '2025-01-12', 'In attesa'),
+('BNCLRA90F41F205X', '9788845210662', '2025-01-10', 'In attesa'),
+('NRANNA02C62H501T', '9780375704024', '2025-01-12', 'In attesa'),
 ('FRRMRC95D15F839K', '9788806229095', '2025-02-01', 'In attesa'),
 ('ESPSRA01H45F205R', '9788807901983', '2025-02-05', 'In attesa'),
 ('RMNGNN99S20H501U', '9788868363449', '2025-02-08', 'Pronto per il prestito'),
@@ -337,8 +338,8 @@ INSERT INTO prenotazione (cf, isbn, data_richiesta, stato) VALUES
 ('LNGFRC97T10F839M', '9788842097580', '2025-03-01', 'In attesa'),
 ('BNCLRA90F41F205X', '9788804684193', '2025-03-05', 'Pronto per il prestito'),
 ('RSSMRA85M01H501Z', '9788806229095', '2025-03-10', 'In attesa'),
-('VRDGPP78A12L219Y', '9788804681161', '2025-03-12', 'In attesa'),
-('CNTLCA88E50G273P', '9788806219645', '2025-03-15', 'In attesa'),
+('VRDGPP78A12L219Y', '9780375704024', '2025-03-12', 'In attesa'),
+('CNTLCA88E50G273P', '9788845210662', '2025-03-15', 'In attesa'),
 ('DMRPLA80B18H501C', '9788807901983', '2025-03-18', 'In attesa'),
 ('BRNRRT75R25G273E', '9788868363449', '2025-03-20', 'In attesa'),
 ('NRANNA02C62H501T', '9788822703578', '2025-03-22', 'Pronto per il prestito'),

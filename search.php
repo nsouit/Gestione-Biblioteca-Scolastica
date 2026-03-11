@@ -114,7 +114,7 @@ try {
         //$sql = substr($sql, 0, -strlen($sql_operation));
 
 
-        echo $sql;
+        //echo $sql;
 
         $conn->query($sql);
 
@@ -144,12 +144,12 @@ try {
 
 
             foreach ($tab as $row) {
-                echo "<tr>";
+                echo "<a href='index.php'><tr>";
                 for ($i = 0; $i < count($keys); $i++) {
                     echo "<td>".$row[$keys[$i]]."</td>";
                 }
                     
-                echo "</tr>";
+                echo "</tr></a>";
             }
 
 

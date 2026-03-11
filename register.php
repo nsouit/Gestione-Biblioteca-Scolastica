@@ -42,13 +42,13 @@ try {
                 <form id="registerForm" action="support/check_user_data.php" method="post">  
                     <h2>Registrati</h2>
                     <?php echo (showError($errors['register'])) ?>
-                    <input type="text" name="cf" placeholder="Codice Fiscale" required>
-                    <input type="text" name="nome" placeholder="Nome" required>
-                    <input type="text" name="cnome" placeholder="Cognome" required>
+                    <input class="form_input" type="text" name="cf" placeholder="Codice Fiscale" required>
+                    <input class="form_input" type="text" name="nome" placeholder="Nome" required>
+                    <input class="form_input" type="text" name="cnome" placeholder="Cognome" required>
                     <lable>Data di nascita:</lable>
-                    <input type="date" name="datan" placeholder="Data di nascita" min="1900-01-01" required>
+                    <input class="form_input" type="date" name="datan" placeholder="Data di nascita" min="1900-01-01" required>
                     <lable>Tipologia utente:</lable>
-                    <select name="tipo" required>
+                    <select class="form_input" name="tipo" required>
                         <?php
                             $sql = "SELECT * FROM tipo_utente;";
 
@@ -62,9 +62,9 @@ try {
                             }
                         ?>
                     </select>
-                    <input type="email" name="email" placeholder="E-mail" required>
-                    <input id="pwd" type="password" name="passwd" placeholder="Password" minlength="6" required>
-                    <input id="pwd_rep" type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
+                    <input class="form_input" type="email" name="email" placeholder="E-mail" required>
+                    <input class="form_input" id="pwd" type="password" name="passwd" placeholder="Password" minlength="6" required>
+                    <input class="form_input" id="pwd_rep" type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
                     <button class="log_reg-btn" type="submit" name="register">Registrati</button>
                     <p>Hai un account? Effettua il <a href="login.php">Login</a>.</p>
                 </form>

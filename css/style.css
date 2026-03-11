@@ -29,6 +29,11 @@ body h2, h3 {
   margin: 10px 20px;
 }
 
+h2 {
+  display: flex;
+  justify-content: center;
+}
+
 nav {
   position: sticky;
   top: 0;
@@ -177,4 +182,8 @@ th {
 th, td {
   padding: 5px;
   border-bottom: 2px solid #ddd;
+}
+
+search_bar {
+  background: #0D4ABC;
 }
