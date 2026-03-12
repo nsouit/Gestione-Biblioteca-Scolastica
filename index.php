@@ -9,6 +9,7 @@ try {
     <?php
     include("support/head.php");
     ?>
+    <link rel="stylesheet" href="css/card.css">
 </head>
 
 <body>
@@ -38,7 +39,7 @@ try {
     ?>
     </div>
 
-    <h2>Libri disponibili:</h2>
+    <h2>Novità</h2>
 
     <?php
     $sql = "SELECT * FROM ((((
@@ -53,16 +54,13 @@ try {
                             USING (IDautore))
         ";
 
-        $sql = "SELECT titolo AS Titolo, nome_casa_editrice AS `Casa Editrice`, anno_pubblicazione AS Anno, nome_genere AS Genere
-                    FROM ($sql) AS l";
-
     $results = $conn->query($sql);
 
     if ($results->rowCount() > 0) {
         $tab = $results->fetchAll(PDO::FETCH_ASSOC);
         //echo var_dump($tab);
         $keys = array_keys($tab[0]);
-
+        /*
         echo "<table>";
         echo "<tr>";
         foreach ($keys as $key)
@@ -79,6 +77,51 @@ try {
         }
 
         echo "</table>";
+        */
+
+        /*
+         <div class="main">
+            <div class="container">
+                <div class="form-box active" id="login-form">
+                    <form id="loginForm" action="support/check_user_data.php" method="post">
+                        <h2>Login</h2>
+                        <input class="form_input" type="email" name="email" placeholder="E-mail" required>
+                        <input id="pwd" class="form_input" type="password" name="passwd" placeholder="Password" minlength="8" required>
+                        <button class="log_reg-btn" type="submit" name="login">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+         */
+
+        //echo var_dump($keys);
+
+        foreach ($tab as $row) {
+            //echo "<a href='book.php/?isbn=$row[isbn]'>";
+            echo "<div class='main'>";
+                echo "<div class='container'>";
+
+                    echo "<a href='index.php'>";
+
+                    echo "<div class='book-box'>";
+                        echo "<div class='box-image'>";
+                            echo "<img src='https://covers.openlibrary.org/b/isbn/$row[isbn]-S.jpg' alt='logo'/>";
+                        echo "</div>";
+                        echo "<div class='box-text'>";
+                            echo "<h2>$row[nome_autore] $row[cognome_autore]</h2>";
+                            echo "<h3>$row[titolo]</h3>";
+                            echo "<p>$row[nome_casa_editrice], $row[anno_pubblicazione]</p>";
+                        echo "</div>";
+                    echo "</div>";
+
+                    echo "</a>";
+
+                echo "</div>";
+            echo "</div>";
+            //echo "</a>";
+        }
+        
+
 
     } else {
         echo "<p>Nessun libro disponibile</p>";

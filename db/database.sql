@@ -22,7 +22,7 @@ CREATE TABLE genere (
 CREATE TABLE libro (
     isbn VARCHAR(13) NOT NULL,
     titolo VARCHAR(30) NOT NULL,
-    anno_pubblicazione YEAR NOT NULL,
+    anno_pubblicazione INT UNSIGNED NOT NULL,
 
     IDcasa_editrice INT(5) UNSIGNED ZEROFILL NOT NULL,
     IDgenere INT(2) UNSIGNED ZEROFILL NOT NULL,
@@ -221,51 +221,34 @@ INSERT INTO tipo_utente (tipo) VALUES
 
 INSERT INTO autore (nome_autore, cognome_autore, data_nascita_autore) VALUES
 ('Umberto', 'Eco', '1932-01-05'),
-('Haruki', 'Murakami', '1949-01-12'),
-('George', 'Orwell', '1903-06-25'),
-('J.R.R.', 'Tolkien', '1892-01-03'),
-('Christopher', 'Tolkien', '1924-11-21'),
-('Yuval Noah', 'Harari', '1976-02-24'),
-('Dan', 'Brown', '1964-06-22'),
-('Walter', 'Isaacson', '1952-05-20'),
-('Ernest', 'Hemingway', '1899-07-21');
-
+('Alessandro', 'Manzoni', '1785-03-07'),
+('Elena', 'Ferrante', '1943-04-05'),
+('Italo', 'Calvino', '1923-10-15'),
+('Primo', 'Levi', '1919-07-31'),
+('Valerio', 'Massimo Manfredi', '1943-02-20'),
+('Andrea', 'Camilleri', '1925-09-06'),
+('Roberto', 'Saviano', '1979-09-22');
 
 INSERT INTO libro VALUES
 ('9788845210662', 'Il nome della rosa', 1980, 1, 5),
-('9780375704024', 'Norwegian Wood', 1987, 1, 1),
-('9788806229095', '1984', 1949, 4, 6),
-('9788807901983', 'Il Signore degli Anelli', 1954, 2, 3),
-('9788868363449', 'Sapiens', 2011, 5, 2),
-('9788822703578', 'Inferno', 2013, 6, 4),
-('9788842097580', 'Steve Jobs', 2011, 7, 7),
-('9788804684193', 'Il vecchio e il mare', 1952, 1, 1);
+('9788817121149', 'I promessi sposi', 1827, 3, 1),
+('9788866320326', 'L''amica geniale', 2011, 2, 1),
+('9788804598893', 'Il barone rampante', 1957, 3, 1),
+('8820101319', 'Se questo e un uomo', 1947, 7, 7),
+('9788483007723', 'Alexandros', 1998, 4, 05),
+('8838910170', 'La forma dell''acqua', 1994, 1, 4),
+('9788483468463', 'Gomorra', 2006, 2, 7);
 
 
-INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
--- Il nome della rosa
+INSERT INTO libri_scritti_autore (isbn, IDautore) VALUES
 ('9788845210662', 1),
-
--- Norwegian Wood
-('9780375704024', 2),
-
--- 1984
-('9788806229095', 3),
-
--- Il Signore degli Anelli
-('9788807901983', 4),
-
--- Sapiens
-('9788868363449', 5),
-
--- Inferno
-('9788822703578', 6),
-
--- Steve Jobs
-('9788842097580', 7),
-
--- Il vecchio e il mare
-('9788804684193', 8);
+('9788817121149', 2),
+('9788866320326', 3),
+('9788804598893', 4),
+('8820101319', 5),
+('9788483007723', 6),
+('8838910170', 7),
+('9788483468463', 8);
 
 /*
 INSERT INTO copia_libro (isbn) VALUES
@@ -280,14 +263,14 @@ INSERT INTO copia_libro (isbn) VALUES
 ('9780375704024'),
 
 -- 1984
-('9788806229095'),
-('9788806229095'),
-('9788806229095'),
+('9781943138432'),
+('9781943138432'),
+('9781943138432'),
 
 -- Il Signore degli Anelli
-('9788807901983'),
-('9788807901983'),
-('9788807901983'),
+('9788845210273'),
+('9788845210273'),
+('9788845210273'),
 
 -- Sapiens
 ('9788868363449'),
@@ -331,16 +314,16 @@ INSERT INTO utente VALUES
 INSERT INTO prenotazione (cf, isbn, data_richiesta, stato) VALUES
 ('BNCLRA90F41F205X', '9788845210662', '2025-01-10', 'In attesa'),
 ('NRANNA02C62H501T', '9780375704024', '2025-01-12', 'In attesa'),
-('FRRMRC95D15F839K', '9788806229095', '2025-02-01', 'In attesa'),
-('ESPSRA01H45F205R', '9788807901983', '2025-02-05', 'In attesa'),
+('FRRMRC95D15F839K', '9781943138432', '2025-02-01', 'In attesa'),
+('ESPSRA01H45F205R', '9788845210273', '2025-02-05', 'In attesa'),
 ('RMNGNN99S20H501U', '9788868363449', '2025-02-08', 'Pronto per il prestito'),
 ('GLLMRA92L03F205A', '9788822703578', '2025-02-10', 'In attesa'),
 ('LNGFRC97T10F839M', '9788842097580', '2025-03-01', 'In attesa'),
 ('BNCLRA90F41F205X', '9788804684193', '2025-03-05', 'Pronto per il prestito'),
-('RSSMRA85M01H501Z', '9788806229095', '2025-03-10', 'In attesa'),
+('RSSMRA85M01H501Z', '9781943138432', '2025-03-10', 'In attesa'),
 ('VRDGPP78A12L219Y', '9780375704024', '2025-03-12', 'In attesa'),
 ('CNTLCA88E50G273P', '9788845210662', '2025-03-15', 'In attesa'),
-('DMRPLA80B18H501C', '9788807901983', '2025-03-18', 'In attesa'),
+('DMRPLA80B18H501C', '9788845210273', '2025-03-18', 'In attesa'),
 ('BRNRRT75R25G273E', '9788868363449', '2025-03-20', 'In attesa'),
 ('NRANNA02C62H501T', '9788822703578', '2025-03-22', 'Pronto per il prestito'),
 ('ESPSRA01H45F205R', '9788804684193', '2025-03-25', 'In attesa');
