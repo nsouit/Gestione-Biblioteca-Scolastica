@@ -31,8 +31,8 @@ h2 {
   margin-bottom: 20px;
 }
 
-.form_input,
-.form_select {
+input,
+select {
   width: 100%;
   padding: 12px;
   background: #eee;
@@ -44,11 +44,11 @@ h2 {
   margin-bottom: 20px;
 }
 
-.form_input:hover {
+input:hover {
   cursor: text;
 }
 
-.form_select:hover {
+select:hover {
   cursor: pointer;
 }
 

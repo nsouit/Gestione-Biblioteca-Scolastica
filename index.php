@@ -39,6 +39,7 @@ try {
     ?>
     </div>
 
+<<<<<<< HEAD
     <h2>Novità</h2>
 
     <?php
@@ -128,6 +129,8 @@ try {
     }
 
     ?>
+=======
+>>>>>>> parent of 383d390 (small adjustements)
 
 
 </body>

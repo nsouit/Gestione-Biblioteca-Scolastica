@@ -42,8 +42,8 @@ try {
                 <form id="loginForm" action="support/check_user_data.php" method="post">
                     <h2>Login</h2>
                     <?php echo (showError($errors['login'])) ?>
-                    <input class="form_input" type="email" name="email" placeholder="E-mail" required>
-                    <input id="pwd" class="form_input" type="password" name="passwd" placeholder="Password" minlength="8" required>
+                    <input type="email" name="email" placeholder="E-mail" required>
+                    <input id="pwd" type="password" name="passwd" placeholder="Password" minlength="8" required>
                     <button class="log_reg-btn" type="submit" name="login">Login</button>
                     <p>Non hai un account? <a href="register.php">Registrati</a>.</p>
                 </form>
