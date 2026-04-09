@@ -14,10 +14,13 @@ if (session_status() != PHP_SESSION_ACTIVE)
         
     </div>
 
-    <form method="get" action="search.php">
-        <input name="search_bar" type="text" placeholder="Cerca nella biblioteca"/>
-        <button type="submit">Cerca</button>
-    </form>
+    <div class="search_form">
+      <form method="get" action="search.php">
+          <input name="search_bar" id="search_bar" type="text" placeholder="Cerca nella biblioteca"/>
+          <button id="search_btn" type="submit">Cerca</button>
+      </form>
+    </div>
+
 
     <ul class="nav-links">
         <?php
@@ -34,7 +37,7 @@ if (session_status() != PHP_SESSION_ACTIVE)
         */
         if (isset($_SESSION['nome']) && isset($_SESSION['email']) && isset($_SESSION['ruolo'])) {
             switch ($_SESSION['ruolo']) {
-                case "Bibliotecario":
+                case "Docente":
                     echo "<li><a class='nav-btn' href='insert_book.php'>Registra libro</a></li>";
                     //echo "<li><a class='nav-btn' href='user_search.php'>Cerca utente</a></li>";
                     break;
@@ -62,3 +65,33 @@ if (session_status() != PHP_SESSION_ACTIVE)
     }
     ?>
 </nav>
+
+
+
+<!--
+<nav class="navbar navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php">Biblioteca</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <form class="navbar-form navbar-left" action="search.php">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search" name="search_bar">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+-->

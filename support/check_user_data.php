@@ -32,7 +32,6 @@ try {
 
             $salt = $user['salt'];
 
-
             $salt_div = str_split($salt, strlen($salt)/2);
             
             $passwd = hash('sha256', $salt_div[0].$_POST['passwd'].$salt_div[1]);
@@ -101,8 +100,13 @@ try {
 
                 if ($results->rowCount() <= 0) {
                     // calcolo salt + password con salt
-                    if (strlen($_POST["passwd"]) != 64 || $_POST["passwd"] === hash('sha256', '')) {
+                    if (strlen($_POST["passwd"]) != 64) {
                         $_SESSION['register_error'] = "Hash password non valido";
+                        header("Location: register.php");
+                    }
+
+                    if ($_POST["passwd"] === hash('sha256', '')) {
+                        $_SESSION['register_error'] = "Password non inserita";
                         header("Location: register.php");
                     }
 

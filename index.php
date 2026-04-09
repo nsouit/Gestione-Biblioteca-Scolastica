@@ -17,7 +17,10 @@ try {
     include("nav_bar.php");
 
     //include("support/print_db_data.php");
+
     ?>
+
+    
 
     <div class="datiDB">
     <?php
@@ -39,7 +42,6 @@ try {
     ?>
     </div>
 
-<<<<<<< HEAD
     <h2>Novità</h2>
 
     <?php
@@ -102,7 +104,7 @@ try {
             echo "<div class='main'>";
                 echo "<div class='container'>";
 
-                    echo "<a href='index.php'>";
+                    echo "<a href='book.php?isbn=$row[isbn]'>";
 
                     echo "<div class='book-box'>";
                         echo "<div class='box-image'>";
@@ -129,8 +131,6 @@ try {
     }
 
     ?>
-=======
->>>>>>> parent of 383d390 (small adjustements)
 
 
 </body>

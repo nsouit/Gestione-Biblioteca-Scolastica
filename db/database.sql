@@ -23,6 +23,7 @@ CREATE TABLE libro (
     isbn VARCHAR(13) NOT NULL,
     titolo VARCHAR(30) NOT NULL,
     anno_pubblicazione INT UNSIGNED NOT NULL,
+    abstract TEXT NULL,
 
     IDcasa_editrice INT(5) UNSIGNED ZEROFILL NOT NULL,
     IDgenere INT(2) UNSIGNED ZEROFILL NOT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE libro (
 
 CREATE TABLE stato_copia_libro (
     IDstato_libro INT(2) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
-    stato VARCHAR(30) NOT NULL UNIQUE,
+    stato VARCHAR(200) NOT NULL UNIQUE,
 
     PRIMARY KEY (IDstato_libro),
     INDEX(stato)
@@ -50,7 +51,7 @@ CREATE TABLE stato_copia_libro (
 CREATE TABLE copia_libro (
     IDcopia INT(5) UNSIGNED ZEROFILL AUTO_INCREMENT NOT NULL,
     isbn VARCHAR(13) NOT NULL,
-    stato INT(2) UNSIGNED ZEROFILL NOT NULL,
+    IDstato_libro INT(2) UNSIGNED ZEROFILL NOT NULL,
 
     PRIMARY KEY(IDcopia),
 
@@ -59,7 +60,7 @@ CREATE TABLE copia_libro (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT copia_libro_ibfk_1
-        FOREIGN KEY(stato) REFERENCES stato_copia_libro(IDstato_libro)
+        FOREIGN KEY(IDstato_libro) REFERENCES stato_copia_libro(IDstato_libro)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -196,6 +197,11 @@ CREATE TABLE multa (
 );
 
 -- inserimento dati all'interno delle tabelle
+
+INSERT INTO stato_copia_libro (stato) VALUES
+('Disponibile'),
+('In prestito');
+
 INSERT INTO genere (nome_genere) VALUES
 ('Romanzo'),
 ('Saggio'),
@@ -219,74 +225,56 @@ INSERT INTO tipo_utente (tipo) VALUES
 ('Docente');
 
 INSERT INTO autore (nome_autore, cognome_autore, data_nascita_autore) VALUES
-('Umberto', 'Eco', '1932-01-05'),
-('Alessandro', 'Manzoni', '1785-03-07'),
-('Elena', 'Ferrante', '1943-04-05'),
-('Italo', 'Calvino', '1923-10-15'),
-('Primo', 'Levi', '1919-07-31'),
-('Valerio', 'Massimo Manfredi', '1943-02-20'),
-('Andrea', 'Camilleri', '1925-09-06'),
-('Roberto', 'Saviano', '1979-09-22');
+('Umberto','Eco','1932-01-05'),
+('Alessandro','Manzoni','1785-03-07'),
+('Elena','Ferrante','1943-04-05'),
+('Italo','Calvino','1923-10-15'),
+('Primo','Levi','1919-07-31'),
+('Valerio','Massimo Manfredi','1943-02-20'),
+('Andrea','Camilleri','1925-09-06'),
+('Roberto','Saviano','1979-09-22');
+
 
 INSERT INTO libro VALUES
-<<<<<<< HEAD
-('9788845210662', 'Il nome della rosa', 1980, 1, 5),
-('9788817121149', 'I promessi sposi', 1827, 3, 1),
-('9788866320326', 'L''amica geniale', 2011, 2, 1),
-('9788804598893', 'Il barone rampante', 1957, 3, 1),
-('8820101319', 'Se questo e un uomo', 1947, 7, 7),
-('9788483007723', 'Alexandros', 1998, 4, 05),
-('8838910170', 'La forma dell''acqua', 1994, 1, 4),
-('9788483468463', 'Gomorra', 2006, 2, 7);
+('8820101319','Se questo e un uomo',1947,'Primo Levi racconta la sua deportazione ad Auschwitz. Una testimonianza lucida sulla disumanizzazione e la sopravvivenza nei lager nazisti.',00007,07),
+('8838910170','La forma dell\'acqua',1994,'Il commissario Montalbano indaga su un potente politico trovato morto in una zona malfamata di Vigàta, scoprendo intrighi e corruzione.',00001,04),
+('9788483007723','Alexandros',1998,'La vita di Alessandro Magno, dalla giovinezza sotto Aristotele fino alle straordinarie conquiste che lo portarono a costruire un impero vastissimo.',00004,05),
+('9788483468463','Gomorra',2006,'Saviano denuncia il sistema criminale della Camorra: traffici, appalti e omicidi. Un\'inchiesta coraggiosa che ha messo a rischio la vita dell\'autore.',00002,07),
+('9788804598893','Il barone rampante',1957,'Il giovane Cosimo sale su un albero e decide di non scendere mai più a terra, vivendo da lassù un\'intera vita avventurosa e filosofica.',00003,01),
+('9788817121149','I promessi sposi',1827,'Renzo e Lucia, promessi sposi nella Lombardia del Seicento, vengono separati dal prepotente Don Rodrigo in un lungo viaggio tra peste e soprusi.',00003,01),
+('9788845210662','Il nome della rosa',1980,'Il frate Guglielmo da Baskerville indaga su morti misteriose in un\'abbazia medievale, dove la biblioteca nasconde un pericoloso segreto.',00001,05),
+('9788866320326','L\'amica geniale',2011,'Elena e Lila crescono in un rione popolare di Napoli negli anni \'50, unite da un\'amicizia intensa e complessa sullo sfondo di una società dura.',00002,01);
 
 
-INSERT INTO libri_scritti_autore (isbn, IDautore) VALUES
-('9788845210662', 1),
-('9788817121149', 2),
-('9788866320326', 3),
-('9788804598893', 4),
-('8820101319', 5),
-('9788483007723', 6),
-('8838910170', 7),
-('9788483468463', 8);
-=======
-('9788806219645', 'Il nome della rosa', 1980, 1, 5);/*,
-('9788804681161', 'Norwegian Wood', 1987, 'Mondadori', 'Romanzo'),
-('9788806229095', '1984', 1949, 'Rizzoli', 'Fantascienza'),
-('9788807901983', 'Il Signore degli Anelli', 1954, 'Feltrinelli', 'Fantasy'),
-('9788868363449', 'Sapiens', 2011, 'Giunti', 'Saggio'),
-('9788822703578', 'Inferno', 2013, 'Newton Compton', 'Thriller'),
-('9788842097580', 'Steve Jobs', 2011, 'Laterza', 'Biografia'),
-('9788804684193', 'Il vecchio e il mare', 1952, 'Mondadori', 'Romanzo');
-*/
+INSERT INTO libri_scritti_autore VALUES
+('9788845210662',1),
+('9788817121149',2),
+('9788866320326',3),
+('9788804598893',4),
+('8820101319',5),
+('9788483007723',6),
+('8838910170',7),
+('9788483468463',8);
 
+INSERT INTO copia_libro (isbn, IDstato_libro) VALUES
+('9788845210662',1),
+('9788817121149',1),
+('9788866320326',1),
+('9788804598893',1),
+('8820101319',1),
+('9788483007723',1),
+('8838910170',1),
+('9788483468463',1),
+-- di nuovo, due copie per metà libri
+('9788845210662',1),
+('9788817121149',1),
+('9788866320326',1),
+('9788804598893',1),
+-- altre due copie per un quarto di libri
+('9788845210662',1),
+('9788817121149',1);
 
-INSERT INTO libri_scritti_autore (isbn, IDAutore) VALUES
--- Il nome della rosa
-('9788806219645', 1);/*,
-
--- Norwegian Wood
-('9788804681161', 2),
-
--- 1984
-('9788806229095', 3),
-
--- Il Signore degli Anelli
-('9788807901983', 4),
-
--- Sapiens
-('9788868363449', 5),
-
--- Inferno
-('9788822703578', 6),
-
--- Steve Jobs
-('9788842097580', 7),
-
--- Il vecchio e il mare
-('9788804684193', 8);
->>>>>>> parent of 383d390 (small adjustements)
-
+/*
 INSERT INTO copia_libro (isbn) VALUES
 -- Il nome della rosa
 ('9788806219645'),
@@ -299,14 +287,14 @@ INSERT INTO copia_libro (isbn) VALUES
 ('9788804681161'),
 
 -- 1984
-('9781943138432'),
-('9781943138432'),
-('9781943138432'),
+('9788806229095'),
+('9788806229095'),
+('9788806229095'),
 
 -- Il Signore degli Anelli
-('9788845210273'),
-('9788845210273'),
-('9788845210273'),
+('9788807901983'),
+('9788807901983'),
+('9788807901983'),
 
 -- Sapiens
 ('9788868363449'),
@@ -348,32 +336,18 @@ INSERT INTO utente VALUES
 
 -- vengono fatte delle prenotazioni, ma nessuna viene impostata a completata
 INSERT INTO prenotazione (cf, isbn, data_richiesta, stato) VALUES
-<<<<<<< HEAD
-('BNCLRA90F41F205X', '9788845210662', '2025-01-10', 'In attesa'),
-('NRANNA02C62H501T', '9780375704024', '2025-01-12', 'In attesa'),
-('FRRMRC95D15F839K', '9781943138432', '2025-02-01', 'In attesa'),
-('ESPSRA01H45F205R', '9788845210273', '2025-02-05', 'In attesa'),
-=======
 ('BNCLRA90F41F205X', '9788806219645', '2025-01-10', 'In attesa'),
 ('NRANNA02C62H501T', '9788804681161', '2025-01-12', 'In attesa'),
 ('FRRMRC95D15F839K', '9788806229095', '2025-02-01', 'In attesa'),
 ('ESPSRA01H45F205R', '9788807901983', '2025-02-05', 'In attesa'),
->>>>>>> parent of 383d390 (small adjustements)
 ('RMNGNN99S20H501U', '9788868363449', '2025-02-08', 'Pronto per il prestito'),
 ('GLLMRA92L03F205A', '9788822703578', '2025-02-10', 'In attesa'),
 ('LNGFRC97T10F839M', '9788842097580', '2025-03-01', 'In attesa'),
 ('BNCLRA90F41F205X', '9788804684193', '2025-03-05', 'Pronto per il prestito'),
-<<<<<<< HEAD
-('RSSMRA85M01H501Z', '9781943138432', '2025-03-10', 'In attesa'),
-('VRDGPP78A12L219Y', '9780375704024', '2025-03-12', 'In attesa'),
-('CNTLCA88E50G273P', '9788845210662', '2025-03-15', 'In attesa'),
-('DMRPLA80B18H501C', '9788845210273', '2025-03-18', 'In attesa'),
-=======
 ('RSSMRA85M01H501Z', '9788806229095', '2025-03-10', 'In attesa'),
 ('VRDGPP78A12L219Y', '9788804681161', '2025-03-12', 'In attesa'),
 ('CNTLCA88E50G273P', '9788806219645', '2025-03-15', 'In attesa'),
 ('DMRPLA80B18H501C', '9788807901983', '2025-03-18', 'In attesa'),
->>>>>>> parent of 383d390 (small adjustements)
 ('BRNRRT75R25G273E', '9788868363449', '2025-03-20', 'In attesa'),
 ('NRANNA02C62H501T', '9788822703578', '2025-03-22', 'Pronto per il prestito'),
 ('ESPSRA01H45F205R', '9788804684193', '2025-03-25', 'In attesa');

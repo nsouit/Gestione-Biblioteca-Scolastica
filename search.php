@@ -9,6 +9,7 @@ try {
     <?php
     include("support/head.php");
     ?>
+    <link rel="stylesheet" href="css/card.css">
 </head>
 
 <body>
@@ -18,8 +19,10 @@ try {
 
     <?php
     // check is search_bar is set
-    if ($_SERVER["REQUEST_METHOD"] == "GET" AND isset($_GET["search_bar"]) AND trim($_GET['search_bar']) != "") {
+    if ($_SERVER["REQUEST_METHOD"] == "GET" AND isset($_GET["search_bar"])) {
         echo "<h2>Risultati per: $_GET[search_bar]</h2>";
+
+        $sql = "";
 
         $key_worlds = explode(" ", $_GET["search_bar"]);
 
@@ -30,54 +33,6 @@ try {
         }
 
         $sql = substr($sql, 0, -strlen($sql_operation));
-
-        //$sql .= ";";
-
-        // cambio l'id del genere mettendone il nome
-        /*$sql = "SELECT 
-                    libri.isbn,
-                    libri.titolo,
-                    libri.anno_pubblicazione,
-                    libri.casa_editrice,
-                    genere.nome AS nome_genere
-                FROM ($sql) AS libri
-                INNER JOIN genere
-                    ON libri.genere = genere.IDgenere";
-
-        //IDcasa_editrice
-        // cambio l'id della casa editrice
-        $sql = "SELECT
-                    libri.isbn,
-                    libri.titolo,
-                    libri.anno_pubblicazione,
-                    libri.nome_genere,
-                    casa_editrice.nome AS nome_casa_editrice
-                FROM ($sql) AS libri
-                INNER JOIN casa_editrice
-                    ON libri.casa_editrice = casa_editrice.IDcasa_editrice";
-
-        $sql = "SELECT
-                    libri.isbn,
-                    libri.titolo,
-                    libri.anno_pubblicazione,
-                    libri.nome_genere,
-                    libri.nome_casa_editrice,
-                    libri_scritti_autore.IDautore
-                FROM ($sql) AS libri
-                INNER JOIN libri_scritti_autoreINNER JOIN libri_scritti_autore
-                    ON libri.isbn = libri_scritti_autore.isbn";
-
-        $sql = "SELECT
-                    libri.isbn,
-                    libri.titolo,
-                    libri.anno_pubblicazione,
-                    libri.nome_genere,
-                    libri.nome_casa_editrice,
-                    autore.nome
-                FROM ($sql) AS libri
-                INNER JOIN autore
-                    ON libri.IDautore = autore.IDautore";
-        */
 
         $sql = "SELECT * FROM ((((
             libro
@@ -91,7 +46,7 @@ try {
                             USING (IDautore))
         ";
 
-        $sql = "SELECT titolo, nome_casa_editrice, anno_pubblicazione, nome_genere
+        $sql = "SELECT *
                     FROM ($sql) AS l 
                     WHERE ";
         
@@ -110,11 +65,12 @@ try {
             $sql .= " $sql_operation cognome_autore LIKE '%$world%'";
             $sql .= " $sql_operation nome_casa_editrice LIKE '%$world%'";
         }
+        
 
         //$sql = substr($sql, 0, -strlen($sql_operation));
 
 
-        echo $sql;
+        //echo $sql;
 
         $conn->query($sql);
 
@@ -134,8 +90,10 @@ try {
             //echo var_dump($tab);
 
             $keys = array_keys($tab[0]);
+
+            //echo var_dump($keys);
            
-            echo "<table>";
+            /*echo "<table>";
 
             echo "<tr>";
             foreach ($keys as $key)
@@ -144,16 +102,41 @@ try {
 
 
             foreach ($tab as $row) {
-                echo "<tr>";
+                echo "<a href='index.php'><tr>";
                 for ($i = 0; $i < count($keys); $i++) {
                     echo "<td>".$row[$keys[$i]]."</td>";
                 }
                     
-                echo "</tr>";
+                echo "</tr></a>";
             }
 
 
-            echo "</table>";
+            echo "</table>";*/
+
+            foreach ($tab as $row) {
+                //echo "<a href='book.php/?isbn=$row[isbn]'>";
+                echo "<div class='main'>";
+                    echo "<div class='container'>";
+
+                        echo "<a href='book.php?isbn=$row[isbn]'>";
+
+                        echo "<div class='book-box'>";
+                            echo "<div class='box-image'>";
+                                echo "<img src='https://covers.openlibrary.org/b/isbn/$row[isbn]-S.jpg' alt='logo'/>";
+                            echo "</div>";
+                            echo "<div class='box-text'>";
+                                echo "<h2>$row[nome_autore] $row[cognome_autore]</h2>";
+                                echo "<h3>$row[titolo]</h3>";
+                                echo "<p>$row[nome_casa_editrice], $row[anno_pubblicazione]</p>";
+                            echo "</div>";
+                        echo "</div>";
+
+                        echo "</a>";
+
+                    echo "</div>";
+                echo "</div>";
+                //echo "</a>";
+            }
 
         } else
              echo "<h3>Nessun libro trovato.</h3>";
