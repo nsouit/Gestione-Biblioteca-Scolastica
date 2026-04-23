@@ -7,7 +7,10 @@
     <?php
         //session_start();
         if (isset($_SESSION["nome"]))
-            echo $_SESSION["nome"]. " - Biblioteca Galattica";
+            //echo $_SESSION["nome"]. " | Biblioteca Galattica";
+            // basename()
+            echo $_SESSION["nome"]. " | ". basename(__FILE__);
+
         else
             echo "Biblioteca Galattica";
     ?>
