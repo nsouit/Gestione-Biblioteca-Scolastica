@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <?php
+session_start();
 try {
     include("inc/connection/start.php");
 ?>
@@ -77,9 +78,13 @@ try {
                             $qt_libro_disp = $results->fetch();
 
                             echo "<div class='box-actions'>";
-                                echo "<ul>
-                                    <a href='reserve.php?isbn=$tab[isbn]'><li id='prenota_btn'>Prenota</li></a>
-                                    <li>Copie totali: $qt_libro[qt]</li>
+                            echo "<ul>";
+                                if (!isset($_SESSION['ruolo']) || $_SESSION['ruolo'] != 'Docente')
+                                    echo "<a href='reserve.php?isbn=$tab[isbn]'><li id='prenota_btn'>Prenota</li></a>";
+                                else
+                                    echo "<a href='manage_book.php?isbn=$tab[isbn]'><li id='prenota_btn'>Gestisci</li></a>";
+
+                                echo "<li>Copie totali: $qt_libro[qt]</li>
                                     <li>Disponibili: $qt_libro_disp[qt]</li>
                                 </ul>";
                             echo "</div>";

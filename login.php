@@ -45,6 +45,7 @@ try {
                     <input class="form_input" type="email" name="email" placeholder="E-mail" required>
                     <input id="pwd" class="form_input" type="password" name="passwd" placeholder="Password" minlength="8" required>
                     <button class="log_reg-btn" type="submit" name="login">Login</button>
+                    <input type="hidden" name="login" value="1">
                     <p>Non hai un account? <a href="register.php">Registrati</a>.</p>
                 </form>
             </div>
@@ -56,7 +57,8 @@ try {
 	  <p>E' necessario abilitarlo per proseguire.</p>
 	</noscript>
 	
-	<script src="script.js">
+	<script src="script.js"></script>
+	<script >
 		document.getElementById('loginForm').addEventListener('submit', async (e) => {
 			e.preventDefault(); // Stop form from submitting immediately
 			

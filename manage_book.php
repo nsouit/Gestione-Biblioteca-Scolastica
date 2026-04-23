@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 
 <?php
+session_start();
+
+if ($_SESSION['ruolo'] != 'Docente') {
+    header("Location: index.php");
+    exit();
+}
+
 try {
     include("inc/connection/start.php");
 ?>
@@ -9,17 +16,14 @@ try {
     <?php
     include("support/head.php");
     ?>
-
 </head>
 
 <body>
     <?php
     include("nav_bar.php");
-    
-
-    echo $_POST['passwd'];
-
     ?>
+
+    
 
 </body>
 </html>

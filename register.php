@@ -39,7 +39,7 @@ try {
     <div class="main">
         <div class="container">
             <div class="form-box active" id="register-form">
-                <form id="registerForm" action="support/check_user_data.php" method="post">  
+                <form id="registerForm" action="support/check_user_data.php" method="post">
                     <h2>Registrati</h2>
                     <?php echo (showError($errors['register'])) ?>
                     <input class="form_input" type="text" name="cf" placeholder="Codice Fiscale" required>
@@ -66,6 +66,7 @@ try {
                     <input class="form_input" id="pwd" type="password" name="passwd" placeholder="Password" minlength="6" required>
                     <input class="form_input" id="pwd_rep" type="password" name="passwd_conf" placeholder="Conferma password" minlength="6" required>
                     <button class="log_reg-btn" type="submit" name="register">Registrati</button>
+                    <input type="hidden" name="register" value="1">
                     <p>Hai un account? Effettua il <a href="login.php">Login</a>.</p>
                 </form>
             </div>
@@ -78,7 +79,8 @@ try {
 	  
 	</noscript>
 	
-	<script src="script.js">
+    <script src="script.js"></script>
+	<script >
 		document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault(); // Stop form from submitting immediately
             

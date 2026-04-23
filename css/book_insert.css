@@ -36,11 +36,11 @@ body {
   gap: 20px;
 }
 
-.box_book_data, .box_autor_data {
+.box_book_data, .box_cas-ed_data, .box_gen_data, .box_autor_data {
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 50%; /* era 25% */
+  max-width: 25%;
 }
 
 .form_input,
@@ -74,7 +74,7 @@ body {
 
 .log_reg-btn {
   width: 100%;   /* occupa tutta la larghezza → va sotto le due colonne */
-
+  height: 50px;
   padding: 12px;
   background: #FF0000;
   border-radius: 6px;
@@ -83,7 +83,6 @@ body {
   font-size: 16px;
   color: #fff;
   font-weight: 500;
-  margin-bottom: 5px;
   transition: 0.25s;
 }
 

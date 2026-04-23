@@ -25,7 +25,7 @@ html, body {
 }
 
 body {
-  background: linear-gradient(to right, #fff, #0D4ABC);
+  background: linear-gradient(to right, #fff, #FF0000);
   color: #333;
   
 }
@@ -79,7 +79,10 @@ nav {
   display: flex;
   align-items: center;
   list-style: none;
-  
+}
+
+.nav-links li{
+  margin: 0 15px;
 }
 
 .nav-links a {
@@ -90,6 +93,7 @@ nav {
   text-transform: uppercase;
   transition: all ease-in-out 100ms;
   color: black;
+  
 }
 
 .nav-links a:hover {

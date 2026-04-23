@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+//var_dump($_POST);
+
+
 try {
     include("../inc/connection/start.php");
     include("../inc/db_tables_params.php");
@@ -17,9 +21,11 @@ try {
         }
     }
 
-    /*=================================
-                    LOGIN
-    =================================*/
+    /**
+     * 
+     * LOGIN
+     * 
+     */
     if (isset($_POST['login'])) {
         $_SESSION['active_form'] = "login";
 
@@ -35,6 +41,11 @@ try {
             $salt_div = str_split($salt, strlen($salt)/2);
             
             $passwd = hash('sha256', $salt_div[0].$_POST['passwd'].$salt_div[1]);
+
+
+
+
+
 
             // cerco il tipo di utente
             $sql = "SELECT tipo FROM tipo_utente WHERE IDtipo = $user[tipo];";
@@ -66,9 +77,12 @@ try {
     }
 
 
-    /*====================================
-                    REGISTER
-    ====================================*/
+    /**
+     * 
+     * REGISTER
+     * 
+     */
+
     else if (isset($_POST['register'])) {
         $_SESSION['active_form'] = "register";
 
@@ -85,10 +99,10 @@ try {
         */
 
         if ($_POST['passwd'] == $_POST['passwd_conf']) {
-            if ((strlen($_POST['passwd']) < PASSWD_MIN_LEN)) {
+            if ((strlen($_POST['passwd']) != PASSWD_HASH_LEN)) {
                 // session error
                 //echo "hey, non mi freghi";
-                $_SESSION['register_error'] = "Password troppo corta!";
+                $_SESSION['register_error'] = "Password non valida!";
             }
             else if (strlen($_POST['cf']) != CF_LEN) {
                 $_SESSION['register_error'] = "Codice Fiscale non corretto!";
@@ -109,6 +123,7 @@ try {
                     if ($_POST["passwd"] === hash('sha256', '')) {
                         $_SESSION['register_error'] = "Password non inserita";
                         header("Location: ../register.php");
+                        exit();
                     }
 
                     $salt = hash('sha256', rand());
@@ -130,16 +145,18 @@ try {
                     $sql = "INSERT INTO utente (cf, nome, cognome, data_nascita, email, passwd, salt, tipo) VALUES ('$_POST[cf]', '$_POST[nome]', '$_POST[cnome]', '$_POST[datan]', '$_POST[email]', '$saved_pwd', '$salt', $_POST[tipo]);";    
                     $conn->query($sql);
                     header("Location: ../index.php");
-                } else {
-                    
+                    exit();
+                    //die("Utente registrato correttamente!");
+                } // ($results->rowCount() <= 0)
+                else {
                     $_SESSION['register_error'] = "Codice Fiscale o email già registrata!";
                 }
-                
             }
-        }
+        } // ($_POST['passwd'] == $_POST['passwd_conf'])
         else
             $_SESSION['register_error'] = "Inserimento password errato!";
 
+        // c'è un bug... in qualche modo, anche se l'utente si registra correttamente, viene reindirizzato al form di registrazione tramite la riga seguente
         header("Location: ../register.php");
         exit();
     }

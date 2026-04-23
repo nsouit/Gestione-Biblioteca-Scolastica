@@ -79,10 +79,10 @@ try {
         $n_libri = $results->rowCount();
 
         if ($n_libri > 0) {
-            if ($n_libri > 1)
+            /*if ($n_libri > 1)
                 echo "<h3>$n_libri libri trovati.</h3>";
             else
-                echo "<h3>$n_libri libro trovato.</h3>";
+                echo "<h3>$n_libri libro trovato.</h3>";*/
 
             // la query ha trovato riscontri
             $tab = $results->fetchAll(PDO::FETCH_ASSOC);
