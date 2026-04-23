@@ -32,53 +32,33 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: left;
+  flex-direction: column;
   /*align-items: center;*/
 }
 
-.box-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20%;
-}
-
-.box-info {
-    margin: 0;
-    padding: 70px 20px;
+.box_book_data, .box_autor_data {
     display: flex;
     flex-direction: column;
+    max-width: 25%;
 }
 
-.box-text h2,
-.box-text h3,
-.box-text p {
-    display: block;
-    margin: 0;
-    text-align: left;
+.form_input,
+.form_select {
+  width: 100%;
+  padding: 12px;
+  background: #eee;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-div a {
-    text-decoration: none;
-    color: #333;
+.form_input:hover {
+  cursor: text;
 }
 
- ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.box-actions ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.box-actions {
-    padding-bottom: 20px;
+.form_select:hover {
+  cursor: pointer;
 }

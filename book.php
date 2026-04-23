@@ -86,10 +86,10 @@ try {
                         
                             // colonna 2 - informazioni
                             echo "<div class='box-text'>";
-                                echo "<p><b>Titolo e autore: </b>$tab[titolo], <a href='autore.php?id='>$tab[nome_autore] $tab[cognome_autore]</a></p>";
+                                echo "<p><b>Titolo e autore: </b>$tab[titolo], <a href='search.php?search_bar=$tab[nome_autore]+$tab[cognome_autore]'>$tab[nome_autore] $tab[cognome_autore]</a></p>";
                                 echo "<p><b>Anno pubblicazione: </b>$tab[anno_pubblicazione]</p>";
-                                echo "<p><b>Casa editrice: </b>$tab[nome_casa_editrice]</p>";
-                                echo "<p><b>Genere: </b>$tab[nome_genere]</p>";
+                                echo "<p><b>Casa editrice: </b><a href='search.php?search_bar=$tab[nome_casa_editrice]'>$tab[nome_casa_editrice]</a></p>";
+                                echo "<p><b>Genere: </b><a href='search.php?search_bar=$tab[nome_genere]'>$tab[nome_genere]</a></p>";
                                 echo "<p><b>Abstract: </b>$tab[abstract]</p>";
                             echo "</div>";
                         echo "</div>";

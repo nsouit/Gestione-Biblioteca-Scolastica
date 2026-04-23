@@ -4,7 +4,7 @@
 session_start();
 
 if (!isset($_SESSION["nome"]) || !isset($_SESSION["email"]) || !isset($_SESSION["ruolo"]))
-    header("location: index.php");
+    header("location: login.php");
 
 try {
     include("inc/connection/start.php");

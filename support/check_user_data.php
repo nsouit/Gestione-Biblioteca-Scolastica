@@ -100,14 +100,15 @@ try {
 
                 if ($results->rowCount() <= 0) {
                     // calcolo salt + password con salt
-                    if (strlen($_POST["passwd"]) != 64) {
+                    /*if (strlen($_POST["passwd"]) != 64) {
                         $_SESSION['register_error'] = "Hash password non valido";
                         header("Location: register.php");
-                    }
+                        
+                    }*/
 
                     if ($_POST["passwd"] === hash('sha256', '')) {
                         $_SESSION['register_error'] = "Password non inserita";
-                        header("Location: register.php");
+                        header("Location: ../register.php");
                     }
 
                     $salt = hash('sha256', rand());
@@ -128,6 +129,7 @@ try {
 
                     $sql = "INSERT INTO utente (cf, nome, cognome, data_nascita, email, passwd, salt, tipo) VALUES ('$_POST[cf]', '$_POST[nome]', '$_POST[cnome]', '$_POST[datan]', '$_POST[email]', '$saved_pwd', '$salt', $_POST[tipo]);";    
                     $conn->query($sql);
+                    header("Location: ../index.php");
                 } else {
                     
                     $_SESSION['register_error'] = "Codice Fiscale o email già registrata!";
