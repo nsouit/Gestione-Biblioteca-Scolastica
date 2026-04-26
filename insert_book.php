@@ -9,10 +9,12 @@ if ($_SESSION['ruolo'] != 'Docente') {
 }
 
 $errors = [
-    'register' => $_SESSION['register_error'] ?? ''
+    'register' => $_SESSION['register_error'] ?? '',
+    'delete' => $_SESSION['delete_error'] ?? ''
 ];
 
 unset($_SESSION['register_error']);
+unset($_SESSION['delete_error']);
 
 function showError($error) {
     return !empty($error) ? "<p class='error-message'>$error</p>" : '';
@@ -26,7 +28,7 @@ try {
     <?php
     include("support/head.php");
     ?>
-    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
@@ -111,6 +113,41 @@ try {
                     <input class="form_input" type="text" name="abstract" placeholder="(*) Abstract">
 
                     <button class="log_reg-btn" type="submit" name="register">Registra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+                        <!-- Eliminazione libro -->
+
+    <div class="main">
+        <div class="container">
+            <div class="form-box active">
+                <form action="support/check_inserted_book.php" method="post">
+                    <h2>Elimina libro</h2>
+
+                    <?php
+                    echo (showError($errors['delete']));
+
+                    $sql = "SELECT * FROM libro;";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        echo "<select class='form_input' name='libro'>";
+
+                        $tab = $results->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($tab as $row)
+                            echo "<option value='$row[isbn]'>$row[titolo], $row[anno_pubblicazione]</option>";
+                        echo "</select>";
+                    }
+                    else
+                        echo "<p>Nessun libro in elenco.</p>";
+
+                    ?>
+                    <button class="log_reg-btn" type="submit" name="delete">Elimina</button>
                 </form>
             </div>
         </div>

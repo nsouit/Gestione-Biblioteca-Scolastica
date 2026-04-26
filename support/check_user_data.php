@@ -56,9 +56,11 @@ try {
                 $usr_type = $results->fetch();
 
                 echo "Correttamente autenticato.";
+                $_SESSION['IDutente'] = $user['IDutente'];
                 $_SESSION['nome'] = $user['nome'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['ruolo'] = $usr_type['tipo'];
+                $_SESSION['codice_fiscale'] = $usr_type['cf'];
                 header("Location: ../index.php");
                 exit();
             }
@@ -144,7 +146,7 @@ try {
 
                     $sql = "INSERT INTO utente (cf, nome, cognome, data_nascita, email, passwd, salt, tipo) VALUES ('$_POST[cf]', '$_POST[nome]', '$_POST[cnome]', '$_POST[datan]', '$_POST[email]', '$saved_pwd', '$salt', $_POST[tipo]);";    
                     $conn->query($sql);
-                    header("Location: ../index.php");
+                    header("Location: ../login.php");
                     exit();
                     //die("Utente registrato correttamente!");
                 } // ($results->rowCount() <= 0)

@@ -89,12 +89,24 @@ try {
             header("Location: ../index.php");
             exit();
         }
-
-        // genere già presente
         $_SESSION['register_error'] = "Libro già esistente";
-        header("Location: ../insert_book.php");
-        exit();
     }
+    else if (isset($_POST['delete'])) {
+        // DELETE FROM table_name WHERE condition; 
+        try {
+            $sql = "DELETE FROM libro WHERE isbn = $_POST[libro];";
+        
+            $results = $conn->query($sql);
+        } catch (PDOException $e) {
+            $_SESSION['delete_error'] = "Impossibile eliminare il libro. Violazione Database.";
+        }
+    }
+    else if (isset($_POST['modify'])) {
+
+    }
+    
+    header("Location: ../insert_book.php");
+    exit();
 
     
 } catch (exception $e) {

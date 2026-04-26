@@ -7,14 +7,6 @@ session_start();
 try {
     include("../inc/connection/start.php");
     include("../inc/db_tables_params.php");
-
-    function checkSetNoErrors($field){
-
-        if(isset($_POST[$field]) && trim($_POST[$field]) != "")
-            return true;
-        else
-            return false;
-    }
     
     if (isset($_POST['register'])) {
         $_SESSION['active_form'] = "register";
@@ -44,9 +36,43 @@ try {
 
         // genere già presente
         $_SESSION['register_error'] = "Casa editrice già esistente";
-        header("Location: ../insert_casa_editrice.php");
-        exit();
     }
+    else if (isset($_POST['delete'])) {
+        // DELETE FROM table_name WHERE condition; 
+        try {
+            $sql = "DELETE FROM casa_editrice WHERE IDcasa_editrice = $_POST[casa_editrice];";
+        
+            $results = $conn->query($sql);
+        } catch (PDOException $e) {
+             $_SESSION['delete_error'] = "Impossibile eliminare la casa editrice. Violazione Database.";
+        }
+    }
+    else if (isset($_POST['modify'])) {
+        $campi = array(
+            "nome_casa_editrice",
+            "casa_editrice",
+        );
+
+        foreach ($campi as $campo) {
+            if (!checkSetNoErrors($campo)) {
+                $_SESSION['modify_error'] = "Aggiornamento casa editrice errato";
+                header("Location: ../insert_casa_editrice.php#modify");
+                exit();
+            }
+        }
+
+        $sql = "
+        UPDATE casa_editrice
+        SET nome_casa_editrice = '$_POST[nome_casa_editrice]'
+        WHERE IDcasa_editrice = $_POST[casa_editrice];
+        ";
+
+        $results = $conn->query($sql);
+    }
+
+    
+    header("Location: ../insert_casa_editrice.php");
+    exit();
 
     
 } catch (exception $e) {

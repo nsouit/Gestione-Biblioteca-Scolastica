@@ -7,14 +7,6 @@ session_start();
 try {
     include("../inc/connection/start.php");
     include("../inc/db_tables_params.php");
-
-    function checkSetNoErrors($field){
-
-        if(isset($_POST[$field]) && trim($_POST[$field]) != "")
-            return true;
-        else
-            return false;
-    }
     
     if (isset($_POST['register'])) {
         $_SESSION['active_form'] = "register";
@@ -44,9 +36,44 @@ try {
 
         // genere già presente
         $_SESSION['register_error'] = "Genere già esistente";
-        header("Location: ../insert_genre.php");
-        exit();
     }
+    else if (isset($_POST['delete'])) {
+        // DELETE FROM table_name WHERE condition; 
+
+        try {
+            $sql = "DELETE FROM genere WHERE IDgenere = $_POST[genere];";
+
+            $results = $conn->query($sql);
+        } catch (PDOException $e) {
+             $_SESSION['delete_error'] = "Impossibile eliminare il genere. Violazione Database.";
+        }
+    }
+    else if (isset($_POST['modify'])) {
+        $campi = array(
+            "nome_genere",
+            "genere",
+        );
+
+        foreach ($campi as $campo) {
+            if (!checkSetNoErrors($campo)) {
+                $_SESSION['modify_error'] = "Aggiornamento genere errato";
+                header("Location: ../insert_genre.php#modify");
+                exit();
+            }
+        }
+
+        $sql = "
+        UPDATE genere
+        SET nome_genere = '$_POST[nome_genere]'
+        WHERE IDgenere = $_POST[genere];
+        ";
+
+        $results = $conn->query($sql);
+    }
+
+    
+    header("Location: ../insert_genre.php");
+    exit();
 
     
 } catch (exception $e) {

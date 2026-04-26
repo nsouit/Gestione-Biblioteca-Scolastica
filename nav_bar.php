@@ -38,10 +38,10 @@ if (session_status() != PHP_SESSION_ACTIVE)
         if (isset($_SESSION['nome']) && isset($_SESSION['email']) && isset($_SESSION['ruolo'])) {
             switch ($_SESSION['ruolo']) {
                 case "Docente":
-                    echo "<li><a class='nav-btn' href='insert_book.php'>Registra libro</a></li>";
-                    echo "<li><a class='nav-btn' href='insert_author.php'>Registra autore</a></li>";
-                    echo "<li><a class='nav-btn' href='insert_genre.php'>Registra genere</a></li>";
-                    echo "<li><a class='nav-btn' href='insert_casa_editrice.php'>Registra casa editrice</a></li>";
+                    echo "<li><a class='nav-btn' href='insert_book.php'>Gestisci libro</a></li>";
+                    echo "<li><a class='nav-btn' href='insert_author.php'>Gestisci autore</a></li>";
+                    echo "<li><a class='nav-btn' href='insert_genre.php'>Gestisci genere</a></li>";
+                    echo "<li><a class='nav-btn' href='insert_casa_editrice.php'>Gestisci casa editrice</a></li>";
                     //echo "<li><a class='nav-btn' href='user_search.php'>Cerca utente</a></li>";
                     break;
                 default:

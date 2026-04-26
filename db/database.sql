@@ -32,11 +32,11 @@ CREATE TABLE libro (
 
     CONSTRAINT libro_ibfk_0
         FOREIGN KEY(IDcasa_editrice) REFERENCES casa_editrice(IDcasa_editrice)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
     CONSTRAINT libro_ibfk_1
         FOREIGN KEY(IDgenere) REFERENCES genere(IDgenere)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
@@ -86,7 +86,7 @@ CREATE TABLE libri_scritti_autore (
         ON UPDATE CASCADE,
     CONSTRAINT libri_scritti_autore_ibfk_1
         FOREIGN KEY(IDautore) REFERENCES autore(IDautore)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
@@ -138,7 +138,7 @@ CREATE TABLE prenotazione (
 
     CONSTRAINT prenotazione_autore_ibfk_0
         FOREIGN KEY(cf) REFERENCES utente(cf)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
     CONSTRAINT prenotazione_autore_ibfk_1
         FOREIGN KEY(isbn) REFERENCES libro(isbn)
@@ -146,7 +146,7 @@ CREATE TABLE prenotazione (
         ON UPDATE CASCADE,
     CONSTRAINT prenotazione_autore_ibfk_2
         FOREIGN KEY(stato) REFERENCES stato_prenotazione(IDstato_prenotazione)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
@@ -162,11 +162,11 @@ CREATE TABLE prestito (
 
     CONSTRAINT prestiti_autore_ibfk_0
         FOREIGN KEY(cf) REFERENCES utente(cf)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
     CONSTRAINT prestiti_autore_ibfk_1
         FOREIGN KEY(IDcopia) REFERENCES copia_libro(IDcopia)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
@@ -188,11 +188,11 @@ CREATE TABLE multa (
 
     CONSTRAINT multa_ibfk_0
         FOREIGN KEY(IDprestito) REFERENCES prestito(IDprestito)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
     CONSTRAINT multa_ibfk_1
         FOREIGN KEY(stato) REFERENCES stato_multa(IDstato_multa)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
 
