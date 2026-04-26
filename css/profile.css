@@ -85,6 +85,23 @@ p a:hover {
   cursor: pointer;
 }
 
+.book_auth_management .delete a {
+  color: #FF0000;
+}
+
+.book_auth_management {
+    display: flex;
+    gap: 5px;
+}
+
+.book_auth_management .autori {
+    text-align: left;
+}
+
+.book_auth_management .delete {
+    margin-left: auto;
+}
+
 .error-message {
   padding: 6px 12px;
   background: #f8d7da;

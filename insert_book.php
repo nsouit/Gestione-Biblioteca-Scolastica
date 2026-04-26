@@ -10,11 +10,16 @@ if ($_SESSION['ruolo'] != 'Docente') {
 
 $errors = [
     'register' => $_SESSION['register_error'] ?? '',
-    'delete' => $_SESSION['delete_error'] ?? ''
+    'delete' => $_SESSION['delete_error'] ?? '',
+    'add_author' => $_SESSION['add_author_error'] ?? '',
+    'author_list' => $_SESSION['author_list_error'] ?? '',
 ];
 
 unset($_SESSION['register_error']);
 unset($_SESSION['delete_error']);
+unset($_SESSION['add_author_error']);
+unset($_SESSION['author_list_error']);
+//author_list
 
 function showError($error) {
     return !empty($error) ? "<p class='error-message'>$error</p>" : '';
@@ -59,10 +64,10 @@ try {
                     
                     <input class="form_input" type="text" name="titolo" placeholder="Titolo" required>
                     
-                    <lable>Anno di pubblicazione:</lable>
+                    <label>Anno di pubblicazione:</label>
                     <input class="form_input" type="number" name="anno_pubblicazione" value='<?php echo date("Y") ?>' required>
                     
-                    <lable>Casa editrice:</lable>
+                    <label>Casa editrice:</label>
                     <select class="form_input" name="casa_editrice" required>
                         <?php
                             $sql = "SELECT * FROM casa_editrice;";
@@ -78,7 +83,7 @@ try {
                         ?>
                     </select>
                     
-                    <lable>Genere:</lable>
+                    <label>Genere:</label>
                     <select class="form_input" name="genere" required>
                         <?php
                             $sql = "SELECT * FROM genere;";
@@ -94,7 +99,7 @@ try {
                         ?>
                     </select>
 
-                    <lable>Autore:</lable>
+                    <label>Autore:</label>
                     <select class="form_input" name="autore" required>
                         <?php
                             $sql = "SELECT * FROM autore;";
@@ -113,6 +118,137 @@ try {
                     <input class="form_input" type="text" name="abstract" placeholder="(*) Abstract">
 
                     <button class="log_reg-btn" type="submit" name="register">Registra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+     <!-- elenco autori libro -->
+    <div class="main" id='author_list'>
+        <div class="container">
+            <div class="form-box active">
+                <form action="insert_book.php#author_list" method="post">
+                    <h2>Gestisci autori libro</h2>
+
+                    <?php
+                    echo (showError($errors['author_list']));
+
+                    $sql = "SELECT * FROM libro;";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        echo "<label>Seleziona libro:</label>";
+                        echo "<select class='form_input' name='libro'>";
+
+                        $tab = $results->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($tab as $row)
+                            echo "<option value='$row[isbn]'>$row[titolo], $row[anno_pubblicazione]</option>";
+                        echo "</select>";
+                    }
+                    else
+                        echo "<p>Nessun libro in elenco.</p>";
+
+                    ?>
+                    <button class="log_reg-btn" type="submit" name="author_list">Ottieni</button>
+                </form>
+
+                <?php
+                // controllo se è stata effettuata una richiesta e mostro i risultati
+                if (isset($_POST["libro"])) {
+                    $sql = "SELECT * FROM libro WHERE isbn = '$_POST[libro]';";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        $row_libro = $results->fetch();
+
+
+                        echo "<label>Elenco autori per '$row_libro[titolo]':</label>";
+                        
+                        // isbn --> libri scritti autore --> id autore --> autore --> stampo
+                        $sql = "SELECT * FROM libri_scritti_autore WHERE isbn = '$row_libro[isbn]';";
+
+                        $results = $conn->query($sql);
+
+                        if ($results->rowCount() > 0) {
+                            $tab_autori = $results->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($tab_autori as $row_lib_aut) {
+                                $sql = "SELECT * FROM autore WHERE IDautore = $row_lib_aut[IDautore];";
+
+                                $results = $conn->query($sql);
+
+                                if ($results->rowCount() > 0) {
+                                    // ho l'autore, lo stampo
+                                    $row_autore = $results->fetch();
+                                    echo "<div class='book_auth_management'>";
+                                        echo "<p class='autori'><a href='search.php?search_bar=$row_autore[nome_autore] $row_autore[cognome_autore]'>$row_autore[nome_autore] $row_autore[cognome_autore]</a></p>";
+
+                                        echo "<p class='delete'><a href='support/remove_book_author.php?isbn=$row_libro[isbn]&IDautore=$row_autore[IDautore]'>Elimina</a></p>";
+                                    echo "</div>";
+                                }
+                            }
+                        } else
+                            echo "<p>Nessun autore presente.</p>";
+                    }
+
+
+                }
+
+
+
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <!--aggiiungi autore libro-->
+    <div class="main" id="add_author">
+        <div class="container">
+            <div class="form-box active">
+                <form action="support/check_inserted_book.php" method="post">
+                    <h2>Aggiungi autore</h2>
+
+                    <?php
+                    echo (showError($errors['add_author']));
+
+                    $sql = "SELECT * FROM libro;";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        echo "<label>Libro:</label>";
+                        echo "<select class='form_input' name='libro'>";
+
+                        $tab = $results->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($tab as $row)
+                                echo "<option value='$row[isbn]'>$row[titolo], $row[anno_pubblicazione]</option>";
+                        echo "</select>";
+                    }
+                    else
+                        echo "<p>Nessun libro in elenco.</p>";
+                    
+
+                    $sql = "SELECT * FROM autore;";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        echo "<label>Autore:</label>";
+                        echo "<select class='form_input' name='autore'>";
+
+                        $tab = $results->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($tab as $row)
+                                echo "<option value='$row[IDautore]'>$row[nome_autore] $row[cognome_autore]</option>";
+                        echo "</select>";
+                    }
+                    else
+                        echo "<p>Nessun autore in elenco.</p>";
+                    ?>
+                    <button class="log_reg-btn" type="submit" name="add_author">Aggiungi</button>
                 </form>
             </div>
         </div>
@@ -152,6 +288,8 @@ try {
             </div>
         </div>
     </div>
+
+   
    
 </body>
 </html>

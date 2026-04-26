@@ -84,10 +84,6 @@ try {
                     }
                     else
                         echo "<p>Nessun autore in elenco.</p>";
-
-                    
-                        
-                    
                     ?>
                     <button class="log_reg-btn" type="submit" name="delete">Elimina</button>
                 </form>

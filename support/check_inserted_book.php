@@ -8,53 +8,25 @@ try {
     include("../inc/connection/start.php");
     include("../inc/db_tables_params.php");
 
-    function checkSetNoErrors($field){
-
-        if(isset($_POST[$field]) && trim($_POST[$field]) != "")
-            return true;
-        else
-            return false;
-    }
+    $campi = array(
+        "isbn",
+        "titolo",
+        "anno_pubblicazione",
+        "autore",
+        "genere",
+        "casa_editrice",
+    );
     
     if (isset($_POST['register'])) {
         $_SESSION['active_form'] = "register";
 
-        if (!checkSetNoErrors('isbn')) {
-            $_SESSION['register_error'] = "Nessun isbn inserito";
-            header("Location: ../insert_book.php");
-            exit();
+        foreach ($campi as $campo) {
+            if (!checkSetNoErrors($campo)) {
+                $_SESSION['register_error'] = "Dati libro errati";
+                header("Location: ../insert_book.php");
+                exit();
+            }
         }
-
-        if (!checkSetNoErrors('titolo')) {
-            $_SESSION['register_error'] = "Nessun titolo inserito";
-            header("Location: ../insert_book.php");
-            exit();
-        }
-
-        if (!checkSetNoErrors('anno_pubblicazione')) {
-            $_SESSION['register_error'] = "Nessun anno inserito";
-            header("Location: ../insert_book.php");
-            exit();
-        }
-
-        if (!checkSetNoErrors('autore')) {
-            $_SESSION['register_error'] = "Nessun autore selezionato";
-            header("Location: ../insert_book.php");
-            exit();
-        }
-
-        if (!checkSetNoErrors('genere')) {
-            $_SESSION['register_error'] = "Nessun genere selezionato";
-            header("Location: ../insert_book.php");
-            exit();
-        }
-
-        if (!checkSetNoErrors('casa_editrice')) {
-            $_SESSION['register_error'] = "Nessuna casa editrice selezionato";
-            header("Location: ../insert_book.php");
-            exit();
-        }
-
 
         // sono sicuro che tutti i dati sono stati inseriti
         // controllo se è goà presente o no
@@ -101,8 +73,26 @@ try {
             $_SESSION['delete_error'] = "Impossibile eliminare il libro. Violazione Database.";
         }
     }
-    else if (isset($_POST['modify'])) {
+    else if (isset($_POST['add_author'])) {
+        if (!checkSetNoErrors("libro") || !checkSetNoErrors("autore")) {
+            $_SESSION['add_author_error'] = "Dati errati";
+            header("Location: ../insert_book.php#add_author");
+            exit();
+        }
 
+        /*
+        INSERT INTO libri_scritti_autore VALUE ('9788845210662',1);
+        */
+
+        try {
+            $sql = "INSERT INTO libri_scritti_autore VALUE ('$_POST[libro]', $_POST[autore]);";
+        
+            $results = $conn->query($sql);
+        } catch (PDOException $e) {
+            $_SESSION['add_author_error'] = "Libro e autore già presenti";
+            header("Location: ../insert_book.php#add_author");
+            exit();
+        }
     }
     
     header("Location: ../insert_book.php");
