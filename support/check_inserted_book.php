@@ -12,7 +12,6 @@ try {
         "isbn",
         "titolo",
         "anno_pubblicazione",
-        "autore",
         "genere",
         "casa_editrice",
     );
@@ -27,6 +26,13 @@ try {
                 exit();
             }
         }
+
+        if (!checkSetNoErrors("autore")) {
+            $_SESSION['register_error'] = "Dati libro errati";
+            header("Location: ../insert_book.php");
+            exit();
+        }
+
 
         // sono sicuro che tutti i dati sono stati inseriti
         // controllo se è goà presente o no
@@ -66,7 +72,7 @@ try {
     else if (isset($_POST['delete'])) {
         // DELETE FROM table_name WHERE condition; 
         try {
-            $sql = "DELETE FROM libro WHERE isbn = $_POST[libro];";
+            $sql = "DELETE FROM libro WHERE isbn = '$_POST[libro]';";
         
             $results = $conn->query($sql);
         } catch (PDOException $e) {
@@ -93,6 +99,50 @@ try {
             header("Location: ../insert_book.php#add_author");
             exit();
         }
+    }
+    else if (isset($_POST['edit_book'])) {
+        
+
+        
+
+        foreach ($campi as $campo) {
+            if (!checkSetNoErrors($campo)) {
+                $_SESSION['edit_book_error'] = "Dati libro incompleti";
+                header("Location: ../edit_book.php");
+                exit();
+            }
+        }
+
+        $sql = "SELECT * FROM libro WHERE isbn = '$_POST[isbn]';";
+
+        $results = $conn->query($sql);
+
+        if ($results->rowCount() > 0) {
+
+            
+            // update
+            /*
+            UPDATE table_name
+            SET column1 = value1, column2 = value2, ...
+            WHERE condition; 
+            */
+            $sql = "
+            UPDATE libro
+            SET titolo = '$_POST[titolo]', anno_pubblicazione = $_POST[anno_pubblicazione], abstract = '$_POST[abstract]', IDcasa_editrice = $_POST[casa_editrice], IDgenere = $_POST[genere]
+            WHERE isbn = '$_POST[isbn]';";
+
+            //echo $sql;
+
+            $results = $conn->query($sql);
+
+            
+
+            header("Location: ../insert_book.php");
+            exit();
+
+        }
+        $_SESSION['edit_book_error'] = "Libro inesistente";
+
     }
     
     header("Location: ../insert_book.php");

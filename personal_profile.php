@@ -10,13 +10,23 @@ if (!isset($_SESSION["IDutente"]) || !isset($_SESSION["nome"]) || !isset($_SESSI
 
 
 $errors = [
-    'update_data' => $_SESSION['update_error'] ?? ''
+    'update_data' => $_SESSION['update_error'] ?? '',
+    'update_passwd' => $_SESSION['update_passwd_error'] ?? '',
+    'update_passwd_suc' => $_SESSION['update_passwd_suc_message'] ?? '',
 ];
 
+//update_passwd_suc
+
 unset($_SESSION['update_error']);
+unset($_SESSION['update_passwd_error']);
+unset($_SESSION['update_passwd_suc_message']);
 
 function showError($error) {
     return !empty($error) ? "<p class='error-message'>$error</p>" : '';
+}
+
+function showSuccess($message) {
+    return !empty($message) ? "<p class='success-message'>$message</p>" : '';
 }
 
 
@@ -41,6 +51,7 @@ try {
                 <form action="support/update_user_data.php" method="post">
                     <h2>Area personale</h2>
                     <?php echo (showError($errors['update_data'])) ?>
+                    
                     <?php
                     $sql = "SELECT * FROM utente WHERE IDutente = $_SESSION[IDutente];";
                     $results = $conn->query($sql);
@@ -69,23 +80,29 @@ try {
     <div class="main">
         <div class="container">
             <div class="form-box active">
-                <form action="support/" method="post">
+                <form id="updateForm" action="support/check_user_data.php" method="post">
                     <h2>Cambio password</h2>
+                    <?php echo (showError($errors['update_passwd'])) ?>
+                    <?php echo (showSuccess($errors['update_passwd_suc'])) ?>
                     <?php
                     $sql = "SELECT * FROM utente WHERE IDutente = $_SESSION[IDutente];";
                     $results = $conn->query($sql);
 
                     if ($results->rowCount() > 0) {
                         $tab = $results->fetch();
-                        echo "<input class='form_input' id='pwd' type='password' name='passwd' placeholder='Vecchia password' minlength='6' required>";
+                        echo "<input class='form_input' id='pwd_old' type='password' name='passwd_old' placeholder='Vecchia password' minlength='6' required>";
 
                         echo "<input class='form_input' id='pwd' type='password' name='passwd' placeholder='Nuova password' minlength='6' required>";
 
                         
                         echo "<input class='form_input' id='pwd_rep' type='password' name='passwd_conf' placeholder='Conferma nuova password' minlength='6' required>";
+
+                    
+                        echo "<input type='hidden' name='IDutente' value='$_SESSION[IDutente]'>";
                     }
                     ?>
-                    <button class="log_reg-btn" type="submit" name="register">Aggiorna</button>
+                    <button class="log_reg-btn" type="submit" name="update_passwd">Aggiorna</button>
+                    <input type="hidden" name="update_passwd" value="1">
                 </form>
             </div>
         </div>
@@ -117,6 +134,44 @@ try {
     </div>
     <?php endif; ?>
     
+
+    <noscript>
+	  <p>Il tuo Browser non supporta JavaScript.</p>
+	  <p>E' necessario abilitarlo per proseguire.</p>
+	  
+	</noscript>
+	
+    <script src="script.js"></script>
+	<script >
+		document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Stop form from submitting immediately
+            
+            const passwordInputOld = document.getElementById('pwd_old');
+            const passwordValueOld = passwordInputOld.value; // ← corretto
+
+            const passwordInput = document.getElementById('pwd');
+            const passwordValue = passwordInput.value;
+
+            const passwordInputRep = document.getElementById('pwd_rep');
+            const passwordValueRep = passwordInputRep.value;
+            
+            // Hash the password
+            const hashed_old = await sha256(passwordValueOld);
+            const hashed = await sha256(passwordValue);
+            const hashed_rep = await sha256(passwordValueRep);
+            
+            // Replace with hash
+            passwordInputOld.value = hashed_old;
+            passwordInput.value = hashed;
+            passwordInputRep.value = hashed_rep;
+            
+            //console.log('Original hashed before submission:', hashed);
+            // Submit form
+            e.target.submit();
+            
+            e.target.reset();
+		});
+	</script>
 </body>
 </html>
 

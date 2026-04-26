@@ -162,6 +162,62 @@ try {
         header("Location: ../register.php");
         exit();
     }
+    else if (isset($_POST['update_passwd'])) {
+        if ($_POST['passwd'] == $_POST['passwd_conf']) {
+            if ((strlen($_POST['passwd']) != PASSWD_HASH_LEN)) {
+                // session error
+                //echo "hey, non mi freghi";
+                $_SESSION['update_passwd_error'] = "Password non valida!";
+            }
+            else if (strlen($_POST['passwd_old']) != PASSWD_HASH_LEN) {
+                $_SESSION['update_passwd_error'] = "Vecchia password non valida!";
+            }
+            else {
+                // prima di inserire l'utente controllo che i suoi dati non siano già presenti
+                $sql = "SELECT * FROM utente WHERE IDutente = '$_POST[IDutente]';";
+                $results = $conn->query($sql);
+
+                if ($results->rowCount() > 0) {
+
+                    $row = $results->fetch();
+                    
+                    $salt = $row['salt'];
+
+                    $salt_div = str_split($salt, strlen($salt)/2);
+                    
+                    $passwd_old = hash('sha256', $salt_div[0].$_POST['passwd_old'].$salt_div[1]);
+
+                    if ($passwd_old === $row['passwd']) {
+                        // password corrisponde, quindi posso cambiare
+                        $saved_pwd = hash('sha256', $salt_div[0].$_POST['passwd'].$salt_div[1]);
+
+                        $sql = "
+                        UPDATE utente
+                        SET passwd = '$saved_pwd';
+                        WHERE IDutente = $_POST[IDutente];
+                        ";
+
+                        $results = $conn->query($sql);
+
+                        $_SESSION['update_passwd_suc_message'] = "Password modificata con successo!";
+                        
+                    }
+                    else {
+                        $_SESSION['update_passwd_error'] = "Vecchia password non valida!";
+                    }
+                } // ($results->rowCount() <= 0)
+                else {
+                    $_SESSION['update_passwd_error'] = "Dati non validi!";
+                }
+            }
+        } // ($_POST['passwd'] == $_POST['passwd_conf'])
+        else
+            $_SESSION['update_passwd_error'] = "Le password non corrispondono!";
+
+
+        header("Location: ../personal_profile.php#updateForm");
+        exit();
+    }
 } catch (exception $e) {
     echo "<h2 style='color:red; font-weight:bold'>".$e->getMessage()."</h2>";
 }

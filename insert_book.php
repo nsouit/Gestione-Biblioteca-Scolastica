@@ -13,13 +13,15 @@ $errors = [
     'delete' => $_SESSION['delete_error'] ?? '',
     'add_author' => $_SESSION['add_author_error'] ?? '',
     'author_list' => $_SESSION['author_list_error'] ?? '',
+    'edit_book' => $_SESSION['edit_book_error'] ?? '',
 ];
 
 unset($_SESSION['register_error']);
 unset($_SESSION['delete_error']);
 unset($_SESSION['add_author_error']);
 unset($_SESSION['author_list_error']);
-//author_list
+unset($_SESSION['edit_book_error']);
+//edit_book_error
 
 function showError($error) {
     return !empty($error) ? "<p class='error-message'>$error</p>" : '';
@@ -115,9 +117,45 @@ try {
                         ?>
                     </select>
 
-                    <input class="form_input" type="text" name="abstract" placeholder="(*) Abstract">
+                    <label>(*) Abstract:</label>
+                    <textarea class='form_input' rows='8' style='resize: none;' name='abstract' placeholder='Abstract'></textarea>
 
                     <button class="log_reg-btn" type="submit" name="register">Registra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+                        <!--MODIFICA-->
+
+    <div class="main">
+        <div class="container">
+            <div class="form-box active">
+                <form action="edit_book.php" method="post">
+                    <h2>Modifica libro</h2>
+
+                    <?php
+                    echo (showError($errors['edit_book']));
+                    $sql = "SELECT * FROM libro;";
+                    
+                    $results = $conn->query($sql);
+
+                    if ($results->rowCount() > 0) {
+                        echo "<label>Seleziona libro:</label>";
+                        echo "<select class='form_input' name='libro'>";
+
+                        $tab = $results->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($tab as $row)
+                            echo "<option value='$row[isbn]'>$row[titolo], $row[anno_pubblicazione]</option>";
+                        echo "</select>";
+                    }
+                    else
+                        echo "<p>Nessun libro in elenco.</p>";
+
+                    ?>
+                    <button class="log_reg-btn" type="submit" name="edit">Modifica</button>
                 </form>
             </div>
         </div>
@@ -151,7 +189,7 @@ try {
                         echo "<p>Nessun libro in elenco.</p>";
 
                     ?>
-                    <button class="log_reg-btn" type="submit" name="author_list">Ottieni</button>
+                    <button class="log_reg-btn" type="submit" name="author_list">Ottieni elenco autori</button>
                 </form>
 
                 <?php
@@ -271,6 +309,7 @@ try {
                     $results = $conn->query($sql);
 
                     if ($results->rowCount() > 0) {
+                        echo "<label>Seleziona libro:</label>";
                         echo "<select class='form_input' name='libro'>";
 
                         $tab = $results->fetchAll(PDO::FETCH_ASSOC);

@@ -111,3 +111,13 @@ p a:hover {
   text-align: center;
   margin-bottom: 20px;
 }
+
+.success-message {
+  padding: 6px 12px;
+  background: #e4ffd5;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #62a93c;
+  text-align: center;
+  margin-bottom: 20px;
+}
